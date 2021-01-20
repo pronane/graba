@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: html_head(removeTag='none')" />
+<title> Login - Graba Admin</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+
+<body <div class="container text-center>
+		<h1>Graba Control Panel</h1>
+		<form th:action="@{/login}" mehod="post" style="max-width: 350px; margin:50px">
+			<div th:if="${param.error}">
+				<p>Invalid username or password.</p>
+			</div>
+			<div th:if="${param.logout}">
+				<p>You have been logged out.</p>
+			</div>
+			<div>
+				<p>
+					<inut type="text" name="email" class="form-control" placeholder="email" required autofocus/>
+				</p>
+				<p>
+					<inut type="password" name="password" class="form-control" placeholder="password" required autofocus/>
+				</p>
+				<p>
+					<inut type="checkbox" name="remember-me"/> Remember me on this computer
+				</p>
+				<p>
+					<inut type="submit" value="login" class="btn btn-primary" />
+				</p>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: html_head(removeTag='none')" />
+
+<body>
+
+<div class="container-fluid">
+		<div th:replace="fragments :: topnav">Top Navigation Menu </div>
+
+<!--		<div th:replace="fragments :: searchnav">Search Navigation</div>-->
+
+	<!--	<div th:replace="fragments :: breadcrumb">Breadcrumb navigation</div>-->
+
+		<div>
+			<h2>Manager Products X [[${pageTitle}]] </h2>
+			<a th:ref="@{/products/new}">Create new product</a>
+			&nbsp;|&nbsp;
+			<a th:ref="@{/products/export}">Export to CSV</a>
+		</div>
+		<div>
+			<form th:action="@{/products/page/1}" class="form-inline m-3">
+				<input type="hidden" name="sortField" th:value="${sortField}"/>
+				<input type="hidden" name="sortDir" th:value="${sortDir}"/>
+				Filter: &nbsp;<input type="text" name="keyword" th:value="${keyword}" class="form-control"/>
+				&nbsp;&nbsp;
+				<input type="submit" value="Search" class="btn btn-primary"/>
+				&nbsp;&nbsp;
+				<input type="submit" value="Clear" class="btn btn-secondary" onclick="clearFilter()"/>
+			</form>
+		</div>
+		
+		<div th:if="${message} != null" class="alert aler-success text-center">
+			$[[{message}]]
+		</div>
+
+		<div>
+			<table class="table table-striped table-bordered table-hover">
+				<thead class="thead-dark" th:with="headerUrlPrefix = '/products/page/'" + ${currentPage.test}> 
+					<tr th:with="headerUrlPostfix = '&sortDir=' + ${reverseSortDir} + ${keyword != 'n'}">
+						<th>
+							<a th:href="@{${headerUrlPrefix} 'id' ${headerUrlPostfix}}"	class="t"></a>
+							<span th:if="${sortField == 'id'}" th:class="${sortDir == 'asc' ? 'fas f' : ''}" />
+						</th>
+						<th>Main Image</th>
+						<th>
+							<a th:href="@{${headerUrlPrefix} + 'name' + ${headerUrlPostfix}}"	class="t"></a>
+							<span th:if="${sortField == 'name'}" th:class="${sortDir == 'asc' ? 'fas f' : ''}" />
+						</th>
+						<th>Brand </th>
+						<th>Category </th>
+						<th>Enabled </th>
+						<th/>
+					</tr>
+				</thead>
+				<tbody>
+				<tr th:each="product : ${listProducts}">
+						<td th:text="${product.id}">Product Id</td>
+						<td>
+							<span th:if="${product.mainImage == null}" class="fas fa-image fa-3x icon"> </span>
+							<img th:unless="${product.mainImagePath == null}" th:src="@{${product.mainImagePath}}"/>
+						</td>
+						<td>	
+							<a th:href="@{'/product/detail/' + ${product.id}}">[[${product.name}]]</a>
+						</td>	
+						<!--<td th:text="${product.brand.name}">Brand</td>
+						<td th:text="${product.category.name}">Category</td>
+						<td th:text="${product.enabled}">Enabled</td>-->
+						<td>
+							<a class="fas fa-file-alt fa-2x icon-green link-detail" th:href="@{'/products/detail/' + 'id' + ${product.id}}" title="View details of Product"> </a>
+							&nbsp;&nbsp;&nbsp;
+				    		<a class="fas fa-edit-alt fa-2x icon-green" th:href="@{'/products/edit/' + 'id' + ${product.id}}" title="Edit this product"></a>
+							&nbsp;&nbsp;&nbsp;
+							<a class="fas fa-trash-alt fa-2x icon-green" th:href="@{/show_delete_modal(type=products,keyField=${product.name},id=${product.id})'}" title="Delete product"/>
+		
+						</td>
+					</tr>
+				</tbody> 
+			</table>
+		</div>
+		
+		<div class="modal" id="myModal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+		
+				</div>
+			</div>
+		</div>
+		
+		<div th:replace="fragments :: footer">Static Footer</div>
+</div>		
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".link-detail").on("click", function(e){
+			e.preventDefault();
+			$("#myModal").modal("show").find(".modal-content").load($(this).attr("href"));
+		});
+	});
+
+	function clearFilter() {
+		window.location = "[[@{'product/'}]]";
+	}
+</script>	
+</body>
+</html>
+							
