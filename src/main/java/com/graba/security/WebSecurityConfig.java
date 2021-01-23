@@ -8,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import org.hibernate.hql.internal.ast.util.PathHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -55,15 +53,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll().anyRequest().permitAll().and()
 				
 				  .formLogin() .loginPage("/login") //.usernameParameter("username")
-				  .defaultSuccessUrl("/") .successHandler(new AuthenticationSuccessHandler() {
-				  
-				  @Override public void onAuthenticationSuccess(HttpServletRequest request,
-				  HttpServletResponse response, Authentication authentication) throws
-				  IOException, ServletException { 
-					  System.out.println("user name " +  authentication.getName());
-				  
-				  UrlPathHelper pathHelper = new UrlPathHelper(); String contextPath =
-				  pathHelper.getContextPath(request); response.sendRedirect(contextPath); } })
 				  .permitAll() .and()
 				 
 				.logout().permitAll()

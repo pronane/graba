@@ -3,26 +3,17 @@
 		xmlns:th="http://www.thymeleaf.org" 
 		xmlns:sec="http://www.thymeleaf.org">
 
-<!--<head th:replace="fragments/common :: html_head(removeTag='none')" />-->
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
 
 <body>
 
 <div class="container-fluid">
+	
+	<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
 
-<div th:insert="fragments2 :: paulstest"></div>
+	<div th:replace="fragments/common :: searchnav">Search Navigation</div>
 
- <!-- <div th:replace="fragments2 :: paulstest"></div>
-
-  <div th:include="fragments2 :: paulstest"></div>
-
-		<div th:replace="fragments2 :: paulstest">Search Navigation</div>
-		
-		<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
-
-
-		<div th:replace="fragments2 :: searchnav">Search Navigation</div>
-
-		<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>-->
+	<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
 	
 	<div>
 		<h2> Shop by Categories:</h2>

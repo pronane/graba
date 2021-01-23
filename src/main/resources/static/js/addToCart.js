@@ -6,6 +6,7 @@ $(document).ready(function() {
 });
 
 function addToCart() {
+	alert("here")
 	quantity = $("#quantity" + productId).val();
 	///cart/add/{pid}/qty}
 	url= contextPath + "/cart/add/" + productId + "/" + quantity;

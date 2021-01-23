@@ -8,6 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<title>[[${pateTitle}]] - [[${siteName}]]</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"> </script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" th:href="@{/fontawesome/all.css}" />
 	<link rel="stylesheet" th:href="@{style.css}" />
 </head>
@@ -70,8 +72,6 @@
 		<div class="col-12 text-center">
 			<p>[[${siteName}]] - Copyright &copy; Graba Ltd.</p>
 		</div>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"/>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"/>
 	</div>
 	
 	<div th:fragment="searchnav" class="row">
@@ -150,7 +150,7 @@
 		<span th:if="${currencySymbolPosition == 'before'}" th:remove="tag">[[${currencySymbol}]]</span>
 	</div>
 	
-	<div th:fragment="standard_modal" class="modal fade text-center" id="myModal">
+	<div th:fragment="standardModal" class="modal fade text-center" id="myModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			

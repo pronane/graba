@@ -8,11 +8,11 @@
 <body>
 
 <div class="container-fluid">
-		<div th:replace="fragments" :: topnav">Top Navigation Menu </div>
+		<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
 
-		<div th:replace="fragments" :: searchnav">Search Navigation</div>
+		<div th:replace="fragments/common :: searchnav">Search Navigation</div>
 
-		<div th:replace="fragments" :: breadcrumb">Breadcrumb navigation</div>
+		<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
 		
 
 	<div class="row">
@@ -63,7 +63,7 @@
 					<b>Out of Stock</b>
 				</span>
 			</div>
-			<div th:replace="quantityControl :: quantityControl(1, ${product.id})">Quantity</div>
+			<div th:replace="fragments/quantityControl :: quantityControl(1, ${product.id})">Quantity</div>
 			<div>
 				<button class="btn btn-primary" id="buttonAddToCart">Add to Cart</button>
 			</div>

@@ -72,7 +72,7 @@
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"/>
 	</div>
 	
-	<div th:fragments="searchnav" class="row">
+	<div th:fragment="searchnav" class="row">
 		<div class="col-md">
 			<th:block sec:authorize="isAuthenticated()">
 			<form th:action="@{/logout}" method="POST" th:hidden="true" name="logoutForm">
@@ -149,7 +149,7 @@
 		<span th:if="${currencySymbolPosition == 'before'}" th:remove="tag">[[${currencySymbol}]]</span>
 	</div>
 	
-	<div th:fragment="standard_modal" class="modal fade text-center" id="myModal">
+	<div th:fragment="standardModal" class="modal fade text-center" id="myModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 			

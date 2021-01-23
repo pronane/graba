@@ -28,8 +28,10 @@
 						<div class="col-1">
 							<div> [[${status.count}]] </div>
 							<div>
+								<!--<a class="fas fa-trash icon-dark link-remove"-->
+								
 								<a class="fas fa-trash icon-dark link-remove"
-									th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}">
+									th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}">Remove
 								</a>
 							</div>
 						</div>
@@ -42,7 +44,7 @@
 									<b>[[${product.name}]]</b>
 								</a>
 							</div>
-							<!--<div th:replace="quantityControl :: quantityControl(${item.quantity}, ${product.id})">Quantity</div>-->
+							<div th:replace="fragments/qualityControl :: quantityControl(${item.quantity}, ${product.id})">Quantity</div>
 							<div>
 								<span>X</span>
 								<span>£[[${product.price}]]</span>
@@ -77,7 +79,7 @@
 			   <h3>You have not chosen any products yet.</h3>
 			</div>
 			
-			<div th:replace="fragments/common :: standard_modal">Standard Modal Dialog </div>
+			<div th:replace="fragments/common :: standardModal">Standard Modal Dialog </div>
 
 			<div th:replace="fragments/common :: footer">Static Footer</div>
 			
@@ -86,10 +88,10 @@
 	contextPath = "[[@{/}]]";
 	var crsfHeaderName = "[[${_csrf.headerName}]]";
 	var csrfValue = "[[${_csrf.token}]]";
-	
+	var productId = "1";
 </script>	
 	
-<script th:src="@{/js/shoppingCart.js}"/>
+<script th:src="@{/js/shoppingCart.js}"> </script>
 </body>
 
 </html>
