@@ -1,6 +1,7 @@
 package com.graba.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.graba.entity.CartItem;
 import com.graba.entity.Customer;
+import com.graba.entity.Product;
+import com.graba.repository.ProductRepository;
 import com.graba.service.CustomerService;
 import com.graba.service.ShoppingCartService;
 
@@ -26,13 +29,25 @@ public class ShoppingClassController {
 	@Autowired
 	private CustomerService customerService;
 	
+	@Autowired
+	private ProductRepository productRepository;
+	
 	@GetMapping("/cart")
 	public String showShoppingCart(Model model, @AuthenticationPrincipal Authentication authentication) {
 		
 		Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
 		List<CartItem> cartItems = cartService.listCartItems(customer);
 		
-		model.addAttribute("cartItems", cartItems);
+		List<Product> products = productRepository.findAllById(cartItems.stream().map
+																(cartItem -> cartItem.getProductId()).collect(Collectors.toSet()));
+		
+
+		 List<CartItem> filteredList = cartItems.stream()
+				 		.filter(cartItem -> products.stream()
+				 		.anyMatch(product -> product.getId().equals(cartItem.getProductId()))).collect(Collectors.toList()); 
+		
+		model.addAttribute("cartItems", filteredList);
+		model.addAttribute("products", products);
 		model.addAttribute("pageTitel", "Shopping Cart");
 		
 		

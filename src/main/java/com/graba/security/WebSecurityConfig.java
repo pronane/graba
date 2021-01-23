@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/oauth2/**", "/register").permitAll()
+		http.authorizeRequests().antMatchers("/**","/oauth2/**", "/register").permitAll()
 				.antMatchers("/customer/**/", "/askquestion/**", "/adddress/**", "/change_password", "/cart","/h2-console/**")
 				.permitAll().anyRequest().permitAll().and()
 				
@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/templates/**", "/static/**", "/css/**", "/js/**", "/images/**", "/vendor/**",
+		web.ignoring().antMatchers("/resources/**","/fragments/**","/templates/**", "/static/**", "/css/**", "/js/**", "/images/**", "/vendor/**",
 				"/fonts/**","/h2-console/**");
 	}
 

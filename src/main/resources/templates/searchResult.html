@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
+
+<body>
+
+<div class="container-fluid">
+		<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
+
+		<div th:replace="fragments/common :: searchnav">Search Navigation</div>
+
+		<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
+	
+	<div>
+		<h2>Search Results for [[${keyword}]]</h2>
+		<br/>
+	</div>
+	
+	<div class="row">
+		<div class="col" th:each="product : ${searchResult}">
+			<div>
+				<a th:href="@{'/p/' + ${product.alias}}" th:title=$[product.name]">
+					<img th:src="@{${product.mainImagePath}} height=150"/>
+					<br/>
+					<b>[[${product.shortName}]]</b>
+				</a>
+			</div>
+			<div>
+				<div th:replace="fragments/common :: discountPrice">Discount price</div>
+				<span th:if="${product.discountPercent > 0}">
+					<div th:replace="fragments/common :: listPrice">List price</div>
+				</span>
+			</div>
+		</div>
+	</div>
+				
+
+	<div th:replace="fragments/common :: footer">Static Footer</div>
+</div>
+</body>
+</html>

@@ -1,11 +1,9 @@
 package com.graba.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,18 +14,12 @@ public class CartItem {
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@Column(name="customer_Id")
+	private Long customerId;
 	
-	 @JoinTable(name = "customer", 
-			 joinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"),
-			 inverseJoinColumns = @JoinColumn(name = "cart_item_id", referencedColumnName = "id"))
-	@ManyToOne(targetEntity = Customer.class)
-	private Customer customer;
-	
-	 @JoinTable(name = "product", 
-			 joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-			 inverseJoinColumns = @JoinColumn(name = "cart_item_id", referencedColumnName = "id"))
-	@ManyToOne(targetEntity = Product.class)
-	private Product product;
+	@Column(name="product_id")
+	private Long productId;
 	
 	private Integer quantity;
 
@@ -39,20 +31,20 @@ public class CartItem {
 		this.id = id;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomer(Long customer) {
+		this.customerId = customer;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Long getProductId() {
+		return productId;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProduct(Long product) {
+		this.productId = product;
 	}
 
 	public Integer getQuantity() {
@@ -65,7 +57,8 @@ public class CartItem {
 
 	@Transient
 	public float getSubtotal() {
-		return this.product.getPrice() * quantity;
+		//return this.product.getPrice() * quantity;
+		return 8 * quantity;
 	}
 	
 }

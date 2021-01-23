@@ -50,7 +50,7 @@ public class Product {
 
 	private Integer brandId;
 	
-	private Integer categoryId;
+	private Long categoryId;
 	
 	private Float length;
 	
@@ -130,11 +130,11 @@ public class Product {
 		this.brandId = brandId;
 	}
 
-	public Integer getCategoryId() {
+	public Long getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Integer categoryId) {
+	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
 

@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,12 @@ import com.graba.repository.ProductRepository;
 public class ProductService {
 
 	public static final int PRODUCTS_PER_PAGE = 5;
+	public static final int SEARCH_RESULT_PER_PAGE = 10;
 	
 	@Autowired
 	private ProductRepository productRepository;
+
+	
 	
 	public void save(Product product) {
 		if(product.getId() == null) {
@@ -50,5 +54,27 @@ public class ProductService {
 			throw new ProductNotFoundException("Product not Found =  " + id);
 		}
 		return productRepository.getOne(id);
+	}
+	
+	
+	public Page<Product> listByCategory(int pageNum, Long categoryId) {
+		String categoryMatchId = "-" + String.valueOf(categoryId + "-");
+		
+		Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTS_PER_PAGE);
+		
+		//return repo.listByCategory(categoryId, categoryIdMatch, pageable);
+		return null;
+	}
+	
+	public Product getProduct(String alias) throws ProductNotFoundException {
+		Product product = productRepository.findByAlias(alias);
+		if(product == null) {
+			throw new ProductNotFoundException("Product does not exist");
+		}
+		return product;
+	}
+	
+	public List<Product> search(String keyword) {
+		return productRepository.search(keyword);
 	}
 }

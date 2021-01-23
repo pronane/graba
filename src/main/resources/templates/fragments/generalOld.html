@@ -1,0 +1,73 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>k</title> 
+</head>
+<body>
+    <div th:fragment="header">
+        <h1>Thymeleaf Fragments sample</h1>
+    </div>
+    <p>Go to the next page to see fragments in action</p>
+    <aside>
+        <div>This is a sidebar</div>
+    </aside>
+
+
+ <div th:fragment="te"  class="row">
+	<h2>Test again </h2>
+ </div>
+
+	<div th:fragment="searchnav" class="row">
+		<div class="col-md">
+			<th:block sec:authorize="isAuthenticated()">
+			<form th:action="@{/logout}" method="POST" th:hidden="true" name="logoutForm">
+				<input type="submit" value="logout">
+			</form>
+			</th:block>
+			<nav class="navbar navbar-expand-sm bg-light">
+				<div class="collapse navbar-collapse" id="searchNavbar">
+					<form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="GET">
+						<input type="search" name="keyword" size="50" th:value="${keyword}" class"form-control mr-sm-2"
+						placeholder="keyword" required />
+						&nbsp;
+						<input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0"/>
+					</form>
+					<ul class="navbar-nav">
+						<th:block sec:authorize="isAuthenticated()">
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/customer}"> <b>[[${#request.userPrincipal.name}]]</b></a>
+						</li>
+						<li class=nav-item>
+							<a class="nav-link" th:href="@{/orders}">My Orders</a>
+						</li>
+						</th:block>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/cart}">Cart</a>
+						</li>
+						
+						<th:block sec:authorize="isAuthenticated()">
+						<li class="nav-item">
+							<a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>
+						</li> 
+						</th:block>
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</div>
+
+
+    <div class="another">This is another sidebar</div>
+    <footer th:fragment="footer">
+        <a th:href="@{/fragments}">Fragments Index</a> | 
+        <a th:href="@{/markup}">Markup inclussion</a> | 
+        <a th:href="@{/params}">Fragment params</a> | 
+        <a th:href="@{/other}">Other</a>
+    </footer>
+</body>
+</html>

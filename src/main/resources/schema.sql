@@ -37,15 +37,20 @@ create table if not exists persistent_logins (
   last_used timestamp not null 
 );
 
+
+
 create table if not exists product (id INTEGER not null AUTO_INCREMENT, active boolean, alias varchar(255), 
 average_rating float, brand_id integer, category_id integer, created_date timestamp, discount_percentage float, 
 full_description varchar(255), height float, in_stock boolean, length float, main_image varchar(255), name varchar(255),
  price float, review_count integer, short_description varchar(255), type integer, updated_date timestamp, weight float,
  width float, cart_item_id bigint ,primary key (id));
 
+CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
+CALL FT_INIT();
+CALL FT_CREATE_INDEX('PUBLIC', 'PRODUCT', NULL);
 
 create table brand (id bigint not null, primary key (id));
-create table cart_item (id bigint not null, quantity integer, primary key (id));
+create table cart_item (id bigint not null, quantity integer, product_id integer, customer_id varchar, primary key (id));
 create table category (id bigint not null, primary key (id));
 create table country (id bigint not null, by_name_asc varchar(255), primary key (id));
 create table customer (cart_item_id bigint, customer_id bigint not null, primary key (customer_id));
@@ -63,7 +68,8 @@ alter table customer add constraint FKk6uxy0fl8d69lqxa9hk732ypo foreign key (cus
 --alter table user add constraint FKpjpul8usu5g8t0ft7tpmx1tof foreign key (user_id) references role;
 --alter table users_privileges add constraint FKawu1071dymslj2ffwanqgkjc9 foreign key (product_id) references product_image;
 --alter table users_privileges add constraint FKn5w6v9ko6yykmiywfuj9ewkbl foreign key (product_image) references product;
- 
+alter table cart_item add constraint sfadafsdafsdafds foreign key (product_id) references product;
+--alter table product add FULLTEXT (name asc, alias asc, short_description asc, full_description asc)	
  
   -- User user/pass
   -- INSERT INTO users (username, password, enabled)

@@ -8,18 +8,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 	<title>[[${pateTitle}]] - [[${siteName}]]</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
-
 	<link rel="stylesheet" th:href="@{/fontawesome/all.css}" />
 	<link rel="stylesheet" th:href="@{style.css}" />
 </head>
 <body>
+
+
+
 	<div th:fragment="topnav" class="row">
 		<div class="col">
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 				<a class="navbar-brand" th:href="@{/}">
-				<!--	<img alt="Site Logo" th:src="@{${siteLogo}" />-->
+					<!--<img alt="Site Logo" th:src="@{${siteLogo}" />-->
 				</a>
-				<button class=navbar-toggler type="button" data-toggle="collapse" data-target="#mai.">
+				<button class=navbar-toggler type="button" data-toggle="collapse" data-target="#mainNavbar.#search">
 					<span class="navbar-toggler-icon"> </span>
 				</button>
 				<div class="collatpse navbar-collapse" id="mainNavbar">
@@ -51,7 +53,7 @@
 	<div th:fragment="footer" class="row mt-3">
 		<div class="col">
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-targer="#mai" >
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-targer="#main" >
 					<span class="navbar-toggler-icon"> </span>
 				</button>
 				<div class="collapse navbar-collapse" id="mainFooterNavbar">
@@ -72,7 +74,7 @@
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"/>
 	</div>
 	
-	<div th:fragments="searchnav" class="row">
+	<div th:fragment="searchnav" class="row">
 		<div class="col-md">
 			<th:block sec:authorize="isAuthenticated()">
 			<form th:action="@{/logout}" method="POST" th:hidden="true" name="logoutForm">
@@ -82,22 +84,20 @@
 			<nav class="navbar navbar-expand-sm bg-light">
 				<div class="collapse navbar-collapse" id="searchNavbar">
 					<form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="GET">
-						<input type="search" name="keyword" th:value="${keyword}" class"form-control mr-sm-2"
+						<input type="search" name="keyword" size="50" th:value="${keyword}" class"form-control mr-sm-2"
 						placeholder="keyword" required />
 						&nbsp;
-						<input type="submit" value="Search" class="btn btn-outline-success" my-2 my-sm-2/>
+						<input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0"/>
 					</form>
 					<ul class="navbar-nav">
 						<th:block sec:authorize="isAuthenticated()">
 						<li class="nav-item">
-			
-							<a class="nav-link" th:href="@{/customer}"> <b>Paul</b></a>
+							<a class="nav-link" th:href="@{/customer}"> <b>[[${#request.userPrincipal.name}]]</b></a>
 						</li>
 						<li class=nav-item>
 							<a class="nav-link" th:href="@{/orders}">My Orders</a>
 						</li>
 						</th:block>
-						
 						<li class="nav-item">
 							<a class="nav-link" th:href="@{/cart}">Cart</a>
 						</li>
@@ -112,6 +112,7 @@
 			</nav>
 		</div>
 	</div>
+	
 			
 	<th:block th:fragment="breadcrumb" th:if="${parents != null && !parents.empty}">
 	<div class="row">
@@ -169,3 +170,5 @@
 			</div>
 		</div>
 	</div>
+</body>
+</html>

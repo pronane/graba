@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -129,6 +130,13 @@ public class CustomerService {
 			 * ((CustomOAuth2User)principal).getEmail(); customer =
 			 * getCustomerByEmail(email); }
 			 */
+		else {
+			
+			User user = (User) principal;
+			customer = new Customer();
+			customer.setUserName(user.getUsername());
+			customer.setId(1l);
+		}
 		
 		return customer;
 	}

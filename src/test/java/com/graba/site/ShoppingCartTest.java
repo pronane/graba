@@ -34,8 +34,8 @@ public class ShoppingCartTest {
 		Customer customer = entityManager.find(Customer.class, 1);
 		
 		CartItem newItem = new CartItem();
-		newItem.setCustomer(customer);
-		newItem.setProduct(product);
+		newItem.setCustomer(1l);
+		newItem.setProduct(1l);
 		newItem.setQuantity(10);
 		
 		CartItem savedCartItem = cartRepo.save(newItem);
@@ -49,7 +49,7 @@ public class ShoppingCartTest {
 		Customer customer = new Customer();
 		//customer.setId(1);
 		
-		List<CartItem> cartItems = cartRepo.findByCustomer(customer);
+		List<CartItem> cartItems = cartRepo.findByCustomerId(customer.getId());
 		
 		assertEquals(2, cartItems.size());
 		

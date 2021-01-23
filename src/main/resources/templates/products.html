@@ -3,16 +3,16 @@
 		xmlns:th="http://www.thymeleaf.org" 
 		xmlns:sec="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: html_head(removeTag='none')" />
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
 
 <body>
 
 <div class="container-fluid">
-		<div th:replace="fragments :: topnav">Top Navigation Menu </div>
+		<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
 
-<!--		<div th:replace="fragments :: searchnav">Search Navigation</div>-->
+		<div th:replace="fragments/common :: searchnav">Search Navigation</div>
 
-	<!--	<div th:replace="fragments :: breadcrumb">Breadcrumb navigation</div>-->
+    	<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
 
 		<div>
 			<h2>Manager Products X [[${pageTitle}]] </h2>
@@ -89,7 +89,7 @@
 			</div>
 		</div>
 		
-		<div th:replace="fragments :: footer">Static Footer</div>
+		<div th:replace="fragments/common :: footer">Static Footer</div>
 </div>		
 <script type="text/javascript">
 	$(document).ready(function() {

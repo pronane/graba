@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org" 
 	  xmlns:sec="http://www.thymeleaf.org">
 
-<head th:replace="fragments :: html_head(removeTag='none')" />
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
 
 <body>
 
@@ -43,12 +43,12 @@
 			</div>
 			<div th:if="${product.discountPercent > 0}">
 				List Price:
-				<div th:replace="fragments :: listPrice">List Price</div>
+				<div th:replace="fragments/common :: listPrice">List Price</div>
 			</div>
 			
 			<div>
 				Price:
-				<div th:replace="fragments :: discountPrice"> Discount price</div>
+				<div th:replace="fragments/common :: discountPrice"> Discount price</div>
 				<span th:if="${product.discountPercent > 0}">([[$product.discountPercent}]]% off) </span>
 			</div>
 			<div>&nbsp;</div>
@@ -102,11 +102,11 @@
 		<div th:replace="product/recommendation :: content">Product Recommendations</div>
 		<div th:replace="product/question_answer :: content">Question and Answers</div>
 		<div th:replace="product/reviews :: content">Reviews</div>
-		<div th:replace="fragments :: footer">Static footer</div>
+		<div th:replace="fragments/common :: footer">Static footer</div>
 </div>
 
 <div th:replace="product/images_carousel :: content">Images Carousel</div>
-<div th:replace="fragments :: standardModal">Standard Modal Dialog </div>	
+<div th:replace="fragments/common :: standardModal">Standard Modal Dialog </div>
 
 <script type="text/javascript">
 	contextPath = "[[@{/}]]";

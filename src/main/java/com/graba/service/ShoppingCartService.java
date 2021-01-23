@@ -25,7 +25,7 @@ public class ShoppingCartService {
 	private ProductRepository productRepository;
 	
 	public List<CartItem> listCartItems(Customer customer) {
-		return cartRepository.findByCustomer(customer);
+		return cartRepository.findByCustomerId(customer.getId());
 	}
 	
 	public Integer addProduct(Long productId, Integer quantity, Customer customer) {
@@ -33,7 +33,7 @@ public class ShoppingCartService {
 		
 		Optional<Product> product = productRepository.findById(productId);
 		
-		CartItem cartItem = cartRepository.findByCustomerAndProduct(customer, product.get());
+		CartItem cartItem = cartRepository.findByCustomerIdAndProductId(customer.getId(), product.get().getId());
 		
 		if(cartItem != null) {
 			addedQuantity = cartItem.getQuantity() + quantity;
@@ -41,8 +41,8 @@ public class ShoppingCartService {
 		} else {
 			cartItem = new CartItem();
 			cartItem.setQuantity(quantity);
-			cartItem.setCustomer(customer);
-			cartItem.setProduct(product.get());
+			cartItem.setCustomer(customer.getId());
+			cartItem.setProduct(productId);
 		}
 		
 		cartRepository.save(cartItem);
@@ -52,7 +52,7 @@ public class ShoppingCartService {
 	
 	public Float updateQuantity(Long productId, Integer quantity, Customer customer) {
 		
-		cartRepository.updateQuantity(quantity, productId, customer.getId());
+	//	cartRepository.updateQuantity(quantity, productId, customer.getId());
 		Product product = productRepository.findById(productId).get();
 		
 		Float subtotal = product.getPrice()* quantity;
@@ -61,6 +61,6 @@ public class ShoppingCartService {
 	}
 	
 	public void removeProduct(Long productId, Customer customer) {
-		cartRepository.deleteByCustomerAndProduct(productId, productId);
+		//cartRepository.deleteByCustomerAndProduct(productId, productId);
 	}
 }
