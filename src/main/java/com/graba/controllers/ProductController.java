@@ -43,7 +43,8 @@ public class ProductController {
 			model.addAttribute("product", product);
 			model.addAttribute("pageTitle", "Product Details (ID: " + id + ")");
 			
-			return "productDetailModal";
+		//	return "productDetailModal";
+			return "productDetail";
 		} catch ( ProductNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message" , "Could not find any productes with ID " + id);
 			return "redirect:/products";

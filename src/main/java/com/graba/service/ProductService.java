@@ -2,6 +2,7 @@ package com.graba.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -49,11 +50,11 @@ public class ProductService {
 
 	public Product get(Long id) throws ProductNotFoundException{
 		// TODO Auto-generated method stub
-		Product product = productRepository.getOne(id);
+		Optional<Product> product = productRepository.findById(id);
 		if(product == null) {
 			throw new ProductNotFoundException("Product not Found =  " + id);
 		}
-		return productRepository.getOne(id);
+		return product.get();
 	}
 	
 	

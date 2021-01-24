@@ -40,10 +40,10 @@ create table if not exists persistent_logins (
 
 
 create table if not exists product (id INTEGER not null AUTO_INCREMENT, active boolean, alias varchar(255), 
-average_rating float, brand_id integer, category_id integer, created_date timestamp, discount_percentage float, 
+average_rating float, brand_id integer, category_id integer, created_date timestamp, DISCOUNT_PERCENT float, 
 full_description varchar(255), height float, in_stock boolean, length float, main_image varchar(255), name varchar(255),
  price float, review_count integer, short_description varchar(255), type integer, updated_date timestamp, weight float,
- width float, cart_item_id bigint ,primary key (id));
+ width float, cart_item_id bigint , URI varchar(255), details varchar(255), primary key (id));
 
 CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
 CALL FT_INIT();
@@ -86,7 +86,7 @@ INSERT INTO authorities (username, authority)
   values ('user', 'ROLE_USER');
   
   
-  INSERT INTO product (name,short_description)
-  values ('biryani', 'nice mild dish');
+  INSERT INTO product (name,short_description, price)
+  values ('biryani', 'nice mild dish', '9.99');
 
   create sequence hibernate_sequence start with 1 increment by 1

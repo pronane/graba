@@ -1,11 +1,10 @@
 $(document).ready(function() {
 		$(".link-remove").on("click", function(evt) {
-			
-			alert("here about to remove ");
+
 			evt.preventDefault();
 			removeFromCart($(this));
 		});
-	$("buttonAddToCart").on("click", function(e) {
+//	$("buttonAddToCart").on("click", function(e) {
 
 		$(".minusButton").on("click", function(evt) {
 			evt.preventDefault();
@@ -13,25 +12,21 @@ $(document).ready(function() {
 		});
 
 		$(".plusButton").on("click", function(evt) {
-			alert("here we are")
 			evt.preventDefault();
 			increaseQuantity($(this));
 		});
 
 		$(".link-remove").on("click", function(evt) {
-			
-			alert("here about to remove ");
 			evt.preventDefault();
 			removeFromCart($(this));
 		});
-		alert('Add to cart')
-		updateTotal();
-	});
+		//alert('Add to cart')
+		//updateTotal();
+//	});
 });
 
 function removeFromCart(link) {
 	url = link.attr("href");
-	alert("alert url is " + url);
 	$.ajax({
 		type: "POST",
 		url: url,
@@ -39,7 +34,6 @@ function removeFromCart(link) {
 			xhr.setRequestHeader(crsfHeaderName, csrfValue);
 		}
 	}).done(function(response) {
-		alert("alert url is " + url);
 		$("#modalTitle").text("Shopping Cart");
 		if(response.includes("removed")) {
 			$("#myModal").on("hide.bs.modal", function(e) {
@@ -51,7 +45,7 @@ function removeFromCart(link) {
 		$("#modalBody").text(response);
 		$("#myModal").modal();
 		
-	}).fail(function() {
+	}).fail(function(response) {
 		$("#modalTitle").text("Shopping Cart");
 		$("#modalBody").text("Error while adding product to shopping cart.");
 		$("#myModal").modal();
@@ -59,13 +53,11 @@ function removeFromCart(link) {
 }
 
 function removeProduct(rowNumber) {
-		alert("alert url is " + url);
 	rowId = "row" + rowNumber;
 	$("#"+rowId).remove();
 }
 
 function decreaseQuantity(link) {
-		alert("alert url is " + url);
 	productId = link.attr("pid");
 	qtyInput = $("#quantity" + productId);
 
@@ -79,7 +71,6 @@ function decreaseQuantity(link) {
 function increaseQuantity(link) {
 	productId = link.attr("pid");
 	qtyInput = $("#quantity" + productId);
-	alert("productId " + productId);
 	newQty = parseInt(qtyInput.val()) + 1;
 	if (newQty < 10) {
 		qtyInput.val(newQty);
@@ -87,7 +78,28 @@ function increaseQuantity(link) {
 	}
 		
 }
+
 function updateQuantity(productId, quantity) {
+	url= contextPath + "/cart/update/" + productId + "/" + quantity;
+	$.ajax({
+		type: "POST",
+		url: contextPath + "cart/update/",
+		data: jQuery.param({ productId: productId, quantity : quantity}) ,
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(crsfHeaderName, csrfValue);
+		}
+	}).done(function(newSubtotal) {
+		updateSubtotal(newSubtotal, productId);
+		updateTotal();
+	}).fail(function() {
+		$("#modalTitle").text("Shopping Cart");
+		$("#modalBody").text("Error while adding product to shopping cart.");
+		$("#myModal").modal();
+	});
+}
+
+/*function updateQuantity(productId, quantity) {
 	url= contextPath + "/cart/update/" + productId + "/" + quantity;
 		alert("alert url is " + url);
 	$.ajax({
@@ -104,14 +116,14 @@ function updateQuantity(productId, quantity) {
 		$("#modalBody").text("Error while adding product to shopping cart.");
 		$("#myModal").modal();
 	});
-}
+}*/
 
 function updateSubtotal(newSubtotal, productId) {
 	$("#subtotal" +productId).text(newSubtotal);
 }
 
-function udpateTotal() {
-	tota = 0.0;
+function updateTotal() {
+	total = 0.0;
 
 	$(".productSubtotal").each(function(index, element) {
 		total = total + parseFloat(element.innerHTML);

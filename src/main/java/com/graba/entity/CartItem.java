@@ -22,6 +22,9 @@ public class CartItem {
 	private Long productId;
 	
 	private Integer quantity;
+	
+	@Transient
+	private Float subTotal;
 
 	public Long getId() {
 		return id;
@@ -35,7 +38,7 @@ public class CartItem {
 		return customerId;
 	}
 
-	public void setCustomer(Long customer) {
+	public void setCustomerId(Long customer) {
 		this.customerId = customer;
 	}
 
@@ -43,7 +46,7 @@ public class CartItem {
 		return productId;
 	}
 
-	public void setProduct(Long product) {
+	public void setProductId(Long product) {
 		this.productId = product;
 	}
 
@@ -56,9 +59,13 @@ public class CartItem {
 	}
 
 	@Transient
-	public float getSubtotal() {
+	public Float getSubtotal() {
 		//return this.product.getPrice() * quantity;
-		return 8 * quantity;
+		return this.subTotal;
+	}
+	
+	public void setSubTotal(Float subTotal) {
+		this.subTotal = subTotal;
 	}
 	
 }

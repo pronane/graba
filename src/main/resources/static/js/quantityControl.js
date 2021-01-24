@@ -1,6 +1,5 @@
 $(document).ready(function() {
 	$(".minusButton").on("click", function(evt) {
-			alert("alert url is " + url);
 		evt.preventDefault();
 		productId = $(this).attr("pid");
 		qtyInput = $("#quantity" + productId);
@@ -11,7 +10,6 @@ $(document).ready(function() {
 	});
 	
 		$(".plusButton").on("click", function(evt) {
-				alert("alert url is " + url);
 		evt.preventDefault();
 		productId = $(this).attr("pid");
 		qtyInput = $("#quantity" + productId);

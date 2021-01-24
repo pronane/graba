@@ -41,8 +41,8 @@ public class ShoppingCartService {
 		} else {
 			cartItem = new CartItem();
 			cartItem.setQuantity(quantity);
-			cartItem.setCustomer(customer.getId());
-			cartItem.setProduct(productId);
+			cartItem.setCustomerId(customer.getId());
+			cartItem.setProductId(productId);
 		}
 		
 		cartRepository.save(cartItem);
@@ -51,8 +51,8 @@ public class ShoppingCartService {
 	}
 	
 	public Float updateQuantity(Long productId, Integer quantity, Customer customer) {
-		
-	//	cartRepository.updateQuantity(quantity, productId, customer.getId());
+		//cartItem.setSubTotal(product.get().getPrice() * quantity);
+	    cartRepository.updateQuantity(quantity, productId, customer.getId());
 		Product product = productRepository.findById(productId).get();
 		
 		Float subtotal = product.getPrice()* quantity;
@@ -61,6 +61,6 @@ public class ShoppingCartService {
 	}
 	
 	public void removeProduct(Long productId, Customer customer) {
-		//cartRepository.deleteByCustomerAndProduct(productId, productId);
+		cartRepository.deleteByCustomerIdAndProductId(customer.getId(),customer.getId());
 	}
 }

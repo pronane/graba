@@ -46,7 +46,7 @@ public class Product {
 	
 	private Float price;
 	
-	private Float discountPercentage;
+	private Float discountPercent;
 
 	private Integer brandId;
 	
@@ -64,6 +64,26 @@ public class Product {
 	
 	private Integer reviewCount;
 	
+	private String uri;
+	
+	private String details;
+	
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
 	private ProductType type;
 	
 	 public String getShortDescription() {
@@ -114,12 +134,12 @@ public class Product {
 		this.inStock = inStock;
 	}
 
-	public Float getDiscountPercentage() {
-		return discountPercentage;
+	public Float getDiscountPercent() {
+		return discountPercent;
 	}
 
-	public void setDiscountPercentage(Float discountPercentage) {
-		this.discountPercentage = discountPercentage;
+	public void setDiscountPercent(Float discountPercent) {
+		this.discountPercent = discountPercent;
 	}
 
 	public Integer getBrandId() {

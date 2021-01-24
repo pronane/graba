@@ -24,11 +24,13 @@
 				<div>
 					<img class="img-thumbnail m-2" th:src="@{${product.mainImagePath}}" width="50" height"50">
 				</div>
-				<div th:each"productImage, status: ${product.images}" class="m-2">
+<!--				<div th:each"productImage, status: ${product.images}" class="m-2">
 					<img th:src="@{${productImage.imagePath}}" width="50" height"80" class="img-thumbnail">
-				</div>
+				</div>-->
 			</div>
 		</div>
+	
+	
 		<div class="col-sm">
 		    <div>
 				<h2>[[${product.name}]]</h2>
@@ -36,10 +38,10 @@
 			<div>
 				<b>Rating Stars</b>
 				&nbsp;&nbsp;
-				<b><a th:href="@{$product.URI} + '#qa'}">[[${numberOfAnsweredQuestions}]] answered questions</a></b>
+				<b><a th:href="@{${product.uri} + '#qa'}">[[${numberOfAnsweredQuestions}]] answered questions</a></b>
 			<div>
-			<div>
-				<span>Brand: [[$product.brand.name}]]</span>
+			<div><!--   move in to span @TODO product.brand.name change this to brand -->
+				<span>Brand: [[${product.name}]]</span>
 			</div>
 			<div th:if="${product.discountPercent > 0}">
 				List Price:
@@ -52,7 +54,7 @@
 				<span th:if="${product.discountPercent > 0}">([[$product.discountPercent}]]% off) </span>
 			</div>
 			<div>&nbsp;</div>
-			<div th:utext="$product.shortDescription}"></div>
+			<div th:utext="${product.shortDescription}"></div>
 		</div> 	
 		<div class="col-sm-2">
 			<div>			
@@ -83,7 +85,7 @@
 			<div class="col-12">
 				<div><hr/></div>
 					<div th:each="detail: ${product.details}">
-					<b>[[${detail.name}]]</b>
+					<!--<b>[[${detail.name}]]</b>-->
 					<span>[[${detail.value}]]</span>
 				</div>
 			</div>
@@ -99,13 +101,13 @@
 			</div>
 		</div>
 		
-		<div th:replace="product/recommendation :: content">Product Recommendations</div>
+<!--		<div th:replace="product/recommendation :: content">Product Recommendations</div>
 		<div th:replace="product/question_answer :: content">Question and Answers</div>
-		<div th:replace="product/reviews :: content">Reviews</div>
+		<div th:replace="product/reviews :: content">Reviews</div>-->
 		<div th:replace="fragments/common :: footer">Static footer</div>
 </div>
 
-<div th:replace="product/images_carousel :: content">Images Carousel</div>
+<!--<div th:replace="product/images_carousel :: content">Images Carousel</div>-->
 <div th:replace="fragments/common :: standardModal">Standard Modal Dialog </div>
 
 <script type="text/javascript">
@@ -128,10 +130,10 @@
 	});
 </script>
 
-<script th:src="@{/js/question.js}"/>
-<script th:src="@{/js/questionVote.js}"/>
-<script th:src="@{/js/quantityControl.js}"/>
-<script th:src="@{/js/addToCart.js}"/>
+<script th:src="@{/js/question.js}"/> </script>
+<script th:src="@{/js/questionVote.js}"/> </script>
+<script th:src="@{/js/quantityControl.js}"/> </script>
+<script th:src="@{/js/addToCart.js}"/> </script>
 
 </body>
 
