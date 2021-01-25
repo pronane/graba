@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,6 +26,8 @@ public class Product {
 	private Long id;
 	
 	private String name;
+	
+	private String shortName;
 	
 	private String alias;
 	
@@ -285,4 +286,14 @@ public class Product {
 		// TODO Auto-generated method stub
 		this.alias = defaultAlias;
 	}
+
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+	
+	
 }

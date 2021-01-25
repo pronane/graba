@@ -4,9 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.graba.common.exception.ProductNotFoundException;
 import com.graba.entity.Category;
@@ -14,6 +19,7 @@ import com.graba.entity.Product;
 import com.graba.service.ProductCategoryService;
 import com.graba.service.ProductService;
 
+@Controller
 public class CommonController {
 	
 	@Autowired
@@ -22,13 +28,25 @@ public class CommonController {
 	@Autowired
 	private ProductService productService;
 	
+	
+	/*
+	 * @GetMapping("/") public String home(Model model){ return "index.html"; }
+	 */
+	 
+	
+	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			model.addAttribute("pageTitle", "Customer Login");
+			return "login";
+		}
 		List<Category> categoryList = categoryService.listNoChildrenCategories();
 		model.addAttribute("categories", categoryList);
 		model.addAttribute("pageTitle", "Home");
 		
-		return "index";
+		return "index.html";
 	}
 	
 	@GetMapping("/c/{category_alias}")
@@ -68,10 +86,10 @@ public class CommonController {
 		return "category";
 	}
 	
-	@GetMapping("/p/{product_alias}")
-	public String viewProductDetail(@PathVariable (name = "productAlias") String alias, Model model) {
+	@GetMapping("/p/{productAlias}")
+	public String viewProductDetail(@PathVariable  String productAlias, Model model) {
 		try {
-			Product product = productService.getProduct(alias);
+			Product product = productService.getProduct(productAlias);
 			List<Category> parents = categoryService.getCategoryParents(product.getCategoryId());
 			model.addAttribute("parents", parents);
 			model.addAttribute("product", product);
@@ -84,7 +102,7 @@ public class CommonController {
 	}
 	
 	@GetMapping("/search")
-	public String search(@PathVariable (name = "keyword") String keyword, Model model) {
+	public String search(@RequestParam (name = "keyword") String keyword, Model model) {
 		
 		List<Product> searchResult = productService.search(keyword);
 		
@@ -92,7 +110,7 @@ public class CommonController {
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("pageTitle", "Search results for " + keyword);
 		
-		return "";
+		return "searchResult";
 	}
 	
 }

@@ -19,12 +19,10 @@ public class LoginController {
 			model.addAttribute("pageTitle", "Customer Login");
 			return "login";
 		}
-		return "redirect:/shoppingCart";
+		return "redirect:/";
 	}
-	
-	@GetMapping("/")
-	public String home(Model model){
-		return "index.html";
-	}
+	/*
+	 * @GetMapping("/") public String home(Model model){ return "index.html"; }
+	 */
 	
 }

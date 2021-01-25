@@ -43,14 +43,16 @@ create table if not exists product (id INTEGER not null AUTO_INCREMENT, active b
 average_rating float, brand_id integer, category_id integer, created_date timestamp, DISCOUNT_PERCENT float, 
 full_description varchar(255), height float, in_stock boolean, length float, main_image varchar(255), name varchar(255),
  price float, review_count integer, short_description varchar(255), type integer, updated_date timestamp, weight float,
- width float, cart_item_id bigint , URI varchar(255), details varchar(255), primary key (id));
+ width float, cart_item_id bigint , URI varchar(255), details varchar(255), short_name varchar(255), primary key (id));
 
 CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
 CALL FT_INIT();
 CALL FT_CREATE_INDEX('PUBLIC', 'PRODUCT', NULL);
 
 create table brand (id bigint not null, primary key (id));
-create table cart_item (id bigint not null, quantity integer, product_id integer, customer_id varchar, primary key (id));
+create table cart_item (id bigint not null, quantity integer, product_id bigint, customer_id bigint, primary key (id));
+create table customer_order (id bigint not null, quantity integer, product_id bigint, customer_id bigint, subtotal float, primary key (id));
+create table order_item (id bigint not null, quantity integer, product_id bigint, customer_id bigint, subtotal float, primary key (id));
 create table category (id bigint not null, primary key (id));
 create table country (id bigint not null, by_name_asc varchar(255), primary key (id));
 create table customer (cart_item_id bigint, customer_id bigint not null, primary key (customer_id));
@@ -86,7 +88,7 @@ INSERT INTO authorities (username, authority)
   values ('user', 'ROLE_USER');
   
   
-  INSERT INTO product (name,short_description, price)
-  values ('biryani', 'nice mild dish', '9.99');
+  INSERT INTO product (name,short_description, price, short_name, alias)
+  values ('chicken biryani', 'nice mild dish', '9.99', 'biryani', 'bir');
 
   create sequence hibernate_sequence start with 1 increment by 1
