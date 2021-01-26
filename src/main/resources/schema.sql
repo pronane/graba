@@ -45,9 +45,9 @@ full_description varchar(255), height float, in_stock boolean, length float, mai
  price float, review_count integer, short_description varchar(255), type integer, updated_date timestamp, weight float,
  width float, cart_item_id bigint , URI varchar(255), details varchar(255), short_name varchar(255), primary key (id));
 
-CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
-CALL FT_INIT();
-CALL FT_CREATE_INDEX('PUBLIC', 'PRODUCT', NULL);
+--CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
+--CALL FT_INIT();
+--CALL FT_CREATE_INDEX('PUBLIC', 'PRODUCT', NULL);
 
 create table brand (id bigint not null, primary key (id));
 create table cart_item (id bigint not null, quantity integer, product_id bigint, customer_id bigint, primary key (id));
@@ -91,4 +91,4 @@ INSERT INTO authorities (username, authority)
   INSERT INTO product (name,short_description, price, short_name, alias)
   values ('chicken biryani', 'nice mild dish', '9.99', 'biryani', 'bir');
 
-  create sequence hibernate_sequence start with 1 increment by 1
+  create sequence hibernate_sequence start with 3 increment by 1

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
+
+<body>
+
+<div class="container-fluid">
+		<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
+
+		<div th:replace="fragments/common :: searchnav">Search Navigation</div>
+
+    	<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
+
+	 <div class="row">
+	        <table class="table table-striped table-bordered" name="product" id="product">
+	            <thead class="thead-dark">
+	                <tr>
+	                    <th class="text-center">Product Id</th>
+	                    <th class="text-center">Product Name</th>
+	                    <th class="text-center">Short Description</th>
+	                    <th class="text-center">Created On</th>
+	                    <th class="text-center">Stock</th>
+	                    <th></th>
+	                    <th></th>
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr  th:each="product : ${productList}" th:id="${product.id}" >
+	                    <td class="text-center">
+	                        <a th:href="@{'/products/detail/'+${product.id}}" th:text="${product.id}"></a>
+	                    </td>
+	                    <td class="text-center"  th:text="${product.name}"></td>
+	                    <td class="text-center" th:text="${product.shortDescription}"></td>
+	                    <td class="text-center" th:text="${#dates.format(product.createdDate,'dd-MM-yyyy HH:mm')}"></td>
+	                  <!--  <td class="text-center" th:text="${item.inventoryByItemId == null} ? 0 : ${item.inventoryByItemId.count}"></td>-->
+						 <td class="text-center" th:text="${product.inStock == null || product.inStock == false} ? 'Unavailable' : 'Available'"></td>
+	                    <td class="text-center">
+	                        <a type="button" class="btn btn-danger" th:attr="data-id=${product.id}">Delete</a>
+	                    </td>
+	                    <td>
+	                        <button class="btn btn-success" data-toggle="modal" data-target="#productUpdateModal"  th:attr="data-id=${product.id},data-productName=${product.name}" >
+	                            Update
+	                        </button>
+	                    </td>
+						<div th:replace="fragments/product :: productAddOrUpdate"></div>
+	                </tr>
+	            </tbody>
+	        </table>
+	    </div>
+
+		<div class="panel-footer text-right">
+		   <button type="button" id="btnSave" data-toggle="modal" class="btn btn-success pull-right" data-target="#productUpdateModal" >Add Product</button>
+		</div>
+		
+		
+		<div th:replace="fragments/product :: productAddOrUpdate">Product Modal Dialog </div>
+		
+		<div th:replace="fragments/common :: standardModal">Standard Modal Dialog </div>
+
+		<div th:replace="fragments/common :: footer">Static Footer</div>
+</div>
+
+<script>
+
+	var crsfHeaderName = "[[${_csrf.headerName}]]";
+	var csrfValue = "[[${_csrf.token}]]";
+    $(document).ready(function () {
+   //     activateLink('list');
+		$('.modal_close').on('hide.bs.modal', function (event) {
+			alert("closed")
+						  window.location.href = "/";
+						})
+
+    });
+
+    $('.btn-danger').click(function () {
+        var productId=$(this).attr("data-id");
+        $.ajax({
+				type: "DELETE",
+				url: '/products/remove/' + productId,
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader(crsfHeaderName, csrfValue);
+				},
+            	success: function(result) {
+					if(result.includes("You must login")) {
+						$("#modalTitle").text("Product Management");
+						$("#modalBody").text("You must login to remove Products.");
+						$("#myModal").modal();
+						 $('#myModal').on('hidden.bs.modal', function () {
+  							window.location.href = "/"
+						  })
+					} else {
+						$("#modalBody").text(result);
+						$("#myModal").modal();
+                		alert('Item with id '+productId+' deleted successfully');
+						$('table#product tr#1').remove();
+					}
+            	},
+				fail: function(result) {
+					alert('There was an failure deleting the prdoduct');
+				},
+				error: function(result) {
+					$("#modalTitle").text("Product Management");
+					$("#modalBody").text("Error while adding removing product.");
+					$("#myModal").modal();
+				}
+        });
+    });
+
+
+    $('.btn-success').click(function () {
+        var productId=$(this).attr("data-id");
+        $('#productId').val(productId);
+		
+		var name=$(this).attr("data-productName");
+		alert('productName '  + name);
+		$('#modalProductName').val(name);
+
+    });
+
+    $('#update').click(function () {
+        var productId = $('#productId').val();
+        //var count = $('#count').val();
+ 		var name = $('#modalProductName').val();
+        var operationType = $('#operation').val();
+
+ 		var product = {};
+    	product.id = productId;
+    	product.name = name;
+    	product.shortDescription = "test";
+
+        var api='';
+        if(operationType == 'add'){
+            api='/products/update/';
+        }else{
+            api = '/products/update/';
+        }
+        $.ajax({
+            url: api,
+			dataType: 'json',
+//            data: { 
+//	                	id : productId,
+//               			name : name
+//			},
+			cache: false, // Force requested pages not to be cached by the browser
+  			processData: false, // Avoid making query string instead of JSON
+			data: JSON.stringify(product),
+			contentType: 'application/json;charset=UTF-8',
+			beforeSend: function(xhr) {
+					xhr.setRequestHeader(crsfHeaderName, csrfValue);
+			},
+            type: 'POST',
+            success: function(data) {
+                alert('Item with id '+productId+' updated successfully');
+            },
+            error : function (data) {
+                alert('Error updating the inventory');
+            }
+        });
+    });
+
+</script>
+</body>
+</html>

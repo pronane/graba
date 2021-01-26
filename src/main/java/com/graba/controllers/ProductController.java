@@ -54,8 +54,21 @@ public class ProductController {
 	@GetMapping("/products/new")
 	public String newProduct(Model model) {
 		List<Brand> listBrands = brandService.findAll();
-		return "";
+		return "addProduct";
 	}
+	
+	@GetMapping("/products/showAll")
+	public String showAll(Model model) {
+		List<Brand> listBrands = brandService.findAll();
+		Page<Product> pageProductList = productService.listAll(1, "name", "asc");
+		
+		if(pageProductList != null ) {
+			List<Product> productList = pageProductList.getContent();
+			model.addAttribute("productList", productList);
+		}
+		return "showAllProducts";
+	}
+	
 	
 	@GetMapping("/products/page/{pageNum}")
 	public String listByPage(@PathVariable(name = "pageNum") Integer pageNum, Model model, 

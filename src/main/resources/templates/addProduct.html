@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
+
+<body>
+
+<div class="container-fluid">
+		<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
+
+		<div th:replace="fragments/common :: searchnav">Search Navigation</div>
+
+    	<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
+
+		<div>
+			<h2>Manager Products X [[${pageTitle}]] </h2>
+			<a th:ref="@{/products/new}">Create new product</a>
+			&nbsp;|&nbsp;
+			<a th:ref="@{/products/export}">Export to CSV</a>
+		</div>
+	    <div class="row">
+            <form method="post" th:action="@{/product/add}" th:object="${itemModel}" class="col-10">
+                <div class="form-group row" th:if="${itemModel != null}">
+                    <label for="itemId" class="col-3 col-form-label">Id</label>
+                    <div class="col-9">
+                        <input id="itemId" name="itemId" type="text" class="form-control" th:value="${itemModel?.itemId}" disabled="disabled">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="itemName" class="col-3 col-form-label">Name</label>
+                    <div class="col-9">
+                        <input id="itemName" name="itemName" type="text" class="form-control" required="required" th:value="${itemModel?.itemName}" th:disabled="${itemModel != null}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="description" class="col-3 col-form-label">Description</label>
+                    <div class="col-9">
+                        <input id="description" name="description" type="text" class="form-control" required="required" th:value="${itemModel?.description}" th:disabled="${itemModel != null}">
+                    </div>
+                </div>
+                <div class="form-group row" th:if="${itemModel != null}">
+                    <label for="addedOn" class="col-3 col-form-label">Added On</label>
+                    <div class="col-9">
+                        <input id="addedOn" name="description" type="text" class="form-control" disabled="disabled" th:value="${#dates.format(itemModel?.addedOn,'dd-MM-yyyy HH:mm')}">
+                    </div>
+                </div>
+                <div class="form-group row" th:if="${itemModel == null}">
+                    <div class="offset-4 col-9">
+                        <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+		
+		<div th:replace="fragments/common :: footer">Static Footer</div>
+</div>		
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".link-detail").on("click", function(e){
+			e.preventDefault();
+			$("#myModal").modal("show").find(".modal-content").load($(this).attr("href"));
+		});
+		
+		activateLink('add');
+	});
+
+	function clearFilter() {
+		window.location = "[[@{'product/'}]]";
+	}
+	
+</script>
+</body>
+</script>	
+</body>
+</html>
+							

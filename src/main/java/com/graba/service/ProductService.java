@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.graba.common.exception.ProductDeletionException;
 import com.graba.common.exception.ProductNotFoundException;
 import com.graba.entity.Product;
 import com.graba.repository.ProductRepository;
@@ -40,9 +41,16 @@ public class ProductService {
 		} else {
 			
 		}
+		productRepository.save(product);
 	}
 
 	public Page<Product> listAll(Integer pageNum, String sortField, String sortDir, String keyword, Long category) {
+		// TODO Auto-generated method stub
+		List<Product> product = productRepository.findAll();
+		return productRepository.findAll(PageRequest.of(0, 3, Sort.by("name").descending()));
+	}
+	
+	public Page<Product> listAll(Integer pageNum, String sortField, String sortDir) {
 		// TODO Auto-generated method stub
 		List<Product> product = productRepository.findAll();
 		return productRepository.findAll(PageRequest.of(0, 3, Sort.by("name").descending()));
@@ -77,5 +85,16 @@ public class ProductService {
 	
 	public List<Product> search(String keyword) {
 		return productRepository.search(keyword);
+	}
+
+	@Transactional
+	public void deleteProductById(Long productId) {
+		// TODO Auto-generated method stub
+		productRepository.deleteById(productId);
+	}
+
+	public void updateProduct(Product product) {
+		// TODO Auto-generated method stub
+		productRepository.save(product);
 	}
 }
