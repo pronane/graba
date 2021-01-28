@@ -33,20 +33,31 @@ public class CommonController {
 	 * @GetMapping("/") public String home(Model model){ return "index.html"; }
 	 */
 	 
+	@GetMapping("/about")
+	public String aboutUs(Model model) {		
+		return "aboutUs";
+	}
 	
 	
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-			model.addAttribute("pageTitle", "Customer Login");
-			return "login";
-		}
 		List<Category> categoryList = categoryService.listNoChildrenCategories();
 		model.addAttribute("categories", categoryList);
 		model.addAttribute("pageTitle", "Home");
 		
 		return "index.html";
+	}
+	
+	@GetMapping("/contact")
+	public String viewContact(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			model.addAttribute("pageTitle", "Customer Login");
+			return "login";
+		}
+		model.addAttribute("pageTitle", "Contact");
+		
+		return "contact.html";
 	}
 	
 	@GetMapping("/c/{category_alias}")

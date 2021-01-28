@@ -43,6 +43,7 @@ public class CustomerService {
 		encodePassword(customer);
 		customer.setCreatedTime(new Date());
 		customer.setActive(false);
+		customer.setUserName(customer.getEmail());
 		//customer.setAuthProvider(AuthenticationProvider.LOCAL);
 		
 		String randomCode = RandomString.make(64);

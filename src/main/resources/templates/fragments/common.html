@@ -22,6 +22,7 @@
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 				<a class="navbar-brand" th:href="@{/}">
 					<!--<img alt="Site Logo" th:src="@{${siteLogo}" />-->
+					<img alt="Site Logo" height="50" th:src="@{images/logo8.png}" />
 				</a>
 				<button class=navbar-toggler type="button" data-toggle="collapse" data-target="#mainNavbar.#search">
 					<span class="navbar-toggler-icon"> </span>
@@ -65,6 +66,12 @@
 							<a class="nav-link" th:href="@{'/m/' + ${footerMenu.alias}}">[[${footerMenu.}]] </a>
 						</li>
 						</th:block>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/about}">About us</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" th:href="@{/registerCompany}">Register your Business?</a>
+						</li>
 					</ul>
 				</div>
 			</nav>
@@ -83,10 +90,18 @@
 			</th:block>
 			<nav class="navbar navbar-expand-sm bg-light">
 				<div class="collapse navbar-collapse" id="searchNavbar">
+					<div class="input-group-prepend">
+                   	 	<button class="btn btn-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Location</button>
+                    	<div class="dropdown-menu" id="location-dropdown" value="Castlerea">
+                     		 <a class="dropdown-item" value="Castlerea" >Castlerea</a>
+<!--                      <div role="separator" class="dropdown-divider"></div>-->
+                   <!--    <a class="dropdown-item" href="#">Separated Category</a>--> 
+                    	</div>
+                		</div>
 					<form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="GET">
-						<input type="search" name="keyword" size="50" th:value="${keyword}" class"form-control mr-sm-2"
-						placeholder="keyword" required />
-						&nbsp;
+						<input type="search" id="item-search" name="keyword" size="50" th:value="${keyword}" class"form-control mr-sm-2"
+							placeholder="What are you looking for " required />
+							&nbsp;
 						<input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0"/>
 					</form>
 					<ul class="navbar-nav">
@@ -99,7 +114,7 @@
 						</li>
 						</th:block>
 						<li class="nav-item">
-							<a class="nav-link" th:href="@{/cart}">Cart</a>
+							<a class="nav-link" id="cart-link" th:href="@{/cart}">Cart</a>
 						</li>
 						
 						<th:block sec:authorize="isAuthenticated()">

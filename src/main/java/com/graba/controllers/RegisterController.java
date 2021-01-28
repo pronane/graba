@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,11 +36,15 @@ public class RegisterController {
 	private CustomerService userService;
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired 
+	private PasswordEncoder bCryptPasswordEncoder;
+	
  
     @Autowired
-    public RegisterController(CustomerService userService, EmailService emailService) {
+    public RegisterController(PasswordEncoder bCryptPasswordEncoder, CustomerService userService, EmailService emailService) {
       
-   //   this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+      this.bCryptPasswordEncoder = bCryptPasswordEncoder;
       this.userService = userService;
       this.emailService = emailService;
     }
@@ -52,21 +58,27 @@ public class RegisterController {
 	
 	// Process form input data
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String processRegistrationForm(ModelAndView modelAndView, @Valid Customer user, BindingResult bindingResult, HttpServletRequest request) {
+	public String processRegistrationForm(Model model, @Valid Customer user, BindingResult bindingResult, HttpServletRequest request) {
 				
 		// Lookup user in database by e-mail
 		Customer userExists = userService.findByEmail(user.getEmail());
 		
 		System.out.println(userExists);
 		
+		
+		
 		if (userExists != null) {
-			modelAndView.addObject("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email provided.");
-			modelAndView.setViewName("register");
+			model.addAttribute("alreadyRegisteredMessage", "Oops!  There is already a user registered with the email provided.");
+			model.addAttribute("register");
+			model.addAttribute("user", user);
 			bindingResult.reject("email");
+			return "register";
 		}
 			
 		if (bindingResult.hasErrors()) { 
-			modelAndView.setViewName("register");		
+			model.addAttribute("register");	
+			model.addAttribute("user", user);
+			return "register";
 		} else { // new user so we create user and send confirmation e-mail
 				  
 		    userService.registerCustomer(user);
@@ -82,16 +94,16 @@ public class RegisterController {
 			
 			emailService.sendEmail(registrationEmail);
 			
-			modelAndView.addObject("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
-			modelAndView.setViewName("register");
+			model.addAttribute("confirmationMessage", "A confirmation e-mail has been sent to " + user.getEmail());
+			model.addAttribute("register");
+			model.addAttribute("user", user);
+			return "register";
 		}
-			
-		return "registrationComplete";
 	}
 	
 	// Process confirmation link
 	@RequestMapping(value="/confirm", method = RequestMethod.GET)
-	public ModelAndView showConfirmationPage(ModelAndView modelAndView, @RequestParam("token") String token) {
+	public String showConfirmationPage(ModelAndView modelAndView, @RequestParam("token") String token) {
 			
 		Customer user = userService.findByConfirmationToken(token);
 			
@@ -102,7 +114,7 @@ public class RegisterController {
 		}
 			
 		modelAndView.setViewName("confirm");
-		return modelAndView;		
+		return "confirm";		
 	}
 	
 	// Process confirmation link
@@ -130,7 +142,7 @@ public class RegisterController {
 		Customer user = userService.findByConfirmationToken((String)requestParams.get("token"));
 
 		// Set new password
-		//user.setPassword(bCryptPasswordEncoder.encode((CharSequence) requestParams.get("password")));
+		user.setPassword(bCryptPasswordEncoder.encode((CharSequence) requestParams.get("password")));
 		user.setPassword((String)requestParams.get("password"));
 		// Set user to enabled
 		//user.setEnabled(true);

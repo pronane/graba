@@ -3,10 +3,12 @@ package com.graba.entity;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "Users")
@@ -45,6 +47,8 @@ public class User implements Serializable {
 	@GeneratedValue
 	private Long id;
 	private String firstName;
+	
+	@Column(name="username")
 	private String userName;
 	private String contact;
 	private String email;

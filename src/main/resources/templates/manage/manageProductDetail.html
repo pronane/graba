@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
+
+<body>
+
+<div class="container-fluid">
+		<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
+
+		<div th:replace="fragments/common :: searchnav">Search Navigation</div>
+
+		<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
+		
+
+	<div class="row">
+		<div class="col-sm text-center">
+			<div style="width: 460px; height: 500px">
+				<img id="bigImage" th:src="@{${product.mainImagePath}}" index="0" class="img-fluid">
+			</div>
+			<div class="row justify-content-center"> 
+				<div>
+					<img class="img-thumbnail m-2" th:src="@{${product.mainImagePath}}" width="50" height"50">
+				</div>
+<!--				<div th:each"productImage, status: ${product.images}" class="m-2">
+					<img th:src="@{${productImage.imagePath}}" width="50" height"80" class="img-thumbnail">
+				</div>-->
+			</div>
+		</div>
+	
+	
+		<div class="col-sm">
+		    <div>
+				<h2>[[${product.name}]]</h2>
+		    </div>
+			<div>
+				<b>Rating Stars</b>
+				&nbsp;&nbsp;
+				<b><a th:href="@{${product.uri} + '#qa'}">[[${numberOfAnsweredQuestions}]] answered questions</a></b>
+			<div>
+			<div><!--   move in to span @TODO product.brand.name change this to brand -->
+				<span>Brand: [[${product.name}]]</span>
+			</div>
+			<div th:if="${product.discountPercent > 0}">
+				List Price:
+				<div th:replace="fragments/common :: listPrice">List Price</div>
+			</div>
+			
+			<div>
+				Price:
+				<div th:replace="fragments/common :: discountPrice"> Discount price</div>
+				<span th:if="${product.discountPercent > 0}">([[$product.discountPercent}]]% off) </span>
+			</div>
+			<div>&nbsp;</div>
+			<div th:utext="${product.shortDescription}"></div>
+		</div> 	
+		<div class="col-sm-2">
+			<div>			
+				<span th:if="${product.inStock}" class="text-success">
+					<b>In Stock</b>
+				</span>
+				<span th:unless="${product.inStock}" class="text-danger">
+					<b>Out of Stock</b>
+				</span>
+			</div>
+		</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div><hr/></div>
+				<div>
+					<h3>Product Description:</h3>
+				</div>	
+		        <div th:utext="${product.fullDescription}"></div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<div><hr/></div>
+					<div th:each="detail: ${product.details}">
+					<!--<b>[[${detail.name}]]</b>-->
+					<span>[[${detail.value}]]</span>
+				</div>
+			</div>
+		</div>
+			
+			
+		<div class="row">
+			<div class="col-12">
+				<div><hr/></div>
+				<div>
+					<h3>YOu may also be interested:</h3>
+				</div>
+			</div>
+		</div>
+		
+<!--		<div th:replace="product/recommendation :: content">Product Recommendations</div>
+		<div th:replace="product/question_answer :: content">Question and Answers</div>
+		<div th:replace="product/reviews :: content">Reviews</div>-->
+		<div th:replace="fragments/common :: footer">Static footer</div>
+</div>
+
+<!--<div th:replace="product/images_carousel :: content">Images Carousel</div>-->
+<div th:replace="fragments/common :: standardModal">Standard Modal Dialog </div>
+
+<script type="text/javascript">
+	contextPath = "[[@{/}]]";
+	var crsfHeaderName = "[[${_csrf.headerName}]]";
+	var csrfValue = "[[${_csrf.token}]]";
+	var productId = "[[${product.id}]]";
+	
+	$(document).ready(function() {
+		$(".img-thumbnail").mouseover(function() {
+			$("#bigImage").attr("src", $(this).attr("src"));
+			$("#bigImage").attr("index", $(this).attr("index"));
+		});
+	
+		$("#bigImage").on("click", function() {
+			$("#carouselModal").modal("show");
+			imageIndex = $("#bigImage").attr("index");
+			$("#carouselExampleControls").carousel(parseInt(imageIndex));
+		});
+	});
+</script>
+
+<script th:src="@{/js/question.js}"/> </script>
+<script th:src="@{/js/questionVote.js}"/> </script>
+<script th:src="@{/js/quantityControl.js}"/> </script>
+<script th:src="@{/js/addToCart.js}"/> </script>
+
+</body>
+
+</html>		
+		

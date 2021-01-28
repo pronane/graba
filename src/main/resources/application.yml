@@ -27,10 +27,16 @@ spring:
   mail:
      host: smtp.gmail.com
      port: 587
-     username: paul.ronane@gmail.com  
-     password: xxxxx
-     properties.mail.smtp.auth: true
-     mail.smtp.starttls.enable: true
+     username: grabalocal@gmail.com
+     password: DingB@t9
+     tls: true
+     protocol: smtp
+     properties:
+        mail:
+           smtp:
+              auth: true
+              starttls.enable: true
+              ssl.trust: smtp.gmail.com
   logging:
     level:
       org:

@@ -49,7 +49,7 @@ full_description varchar(255), height float, in_stock boolean, length float, mai
 --CALL FT_INIT();
 --CALL FT_CREATE_INDEX('PUBLIC', 'PRODUCT', NULL);
 
-create table brand (id bigint not null, primary key (id));
+create table BRAND (id bigint not null, primary key (id));
 create table cart_item (id bigint not null, quantity integer, product_id bigint, customer_id bigint, primary key (id));
 create table customer_order (id bigint not null, quantity integer, product_id bigint, customer_id bigint, subtotal float, primary key (id));
 create table order_item (id bigint not null, quantity integer, product_id bigint, customer_id bigint, subtotal float, primary key (id));

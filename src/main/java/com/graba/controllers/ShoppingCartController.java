@@ -31,9 +31,14 @@ public class ShoppingCartController {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	
 	@GetMapping("/cart")
 	public String showShoppingCart(Model model, @AuthenticationPrincipal Authentication authentication) {
 		
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			return "login";
+		}
+				
 		Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
 		List<CartItem> cartItems = cartService.listCartItems(customer);
 		

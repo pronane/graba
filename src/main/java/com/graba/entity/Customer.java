@@ -3,12 +3,10 @@ package com.graba.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-//@Table(name="Customer")
+@Entity(name="Customer")
+@Table(name="Users")
 public class Customer extends User{
 
 	
@@ -17,12 +15,6 @@ public class Customer extends User{
 	 */
 	private static final long serialVersionUID = 6853144086685821272L;
 
-
-	private String email;
-	
-	private String firstName;
-	
-	private String lastName;
 	
 	private String phoneNumber;
 	
@@ -31,13 +23,6 @@ public class Customer extends User{
 	private String city;
 	private String state;
 	
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -100,21 +85,12 @@ public class Customer extends User{
 		this.active = true;
 	}
 
-
 	public String getResetPasswordToken() {
 		return resetPasswordToken;
 	}
 
 	public void setResetPasswordToken(String resetPasswordToken) {
 		this.resetPasswordToken = resetPasswordToken;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getFirstName() {
-		return firstName;
 	}
 
 	public Date getCreatedTime() {
@@ -147,17 +123,8 @@ public class Customer extends User{
 		return serialVersionUID;
 	}
 
-
 	public String getAuthProvider() {
 		return authProvider;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
 	}
 
 	public void setCreatedTime(Date createdTime) {
@@ -170,7 +137,7 @@ public class Customer extends User{
 
 	public String getConfirmationToken() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.verificationCode;
 	}
 
 	

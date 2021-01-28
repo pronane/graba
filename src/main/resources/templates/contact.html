@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:sec="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common :: html_head(removeTag='none')" />
+
+<body>
+
+<div class="container-fluid">
+	
+	<div th:replace="fragments/common :: topnav">Top Navigation Menu </div>
+
+	<div th:replace="fragments/common :: searchnav">Search Navigation</div>
+
+	<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
+	
+	<div>
+		<h2> Shop by Categories:</h2>
+		<br/>
+	</div>
+	
+	<div class="row">
+		<div class="col" th:each="cat : ${categories}">
+			<div><img th:src="@{${cat.imagePath}}" width="80" /> </div>
+			<div>
+				<a th:href="@{'/c/' + ${cat.alias}}">[[${cat.name}]]</a>
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		<h2>Features Sales</h2>
+		<br/>
+	</div>
+	<div>
+		<h2>Features Products</h2>
+		<br/>
+	</div>
+	<div>
+		<h2>Features Brands</h2>
+		<br/>
+	</div>
+	
+	<div th:replace="fragments/common :: footer">Static Footer</div>
+</div>
+</body>
+</html>

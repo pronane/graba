@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.graba.entity.Customer;
 import com.graba.entity.Role;
 import com.graba.entity.User;
 import com.graba.repository.RoleRepository;
@@ -41,7 +42,7 @@ public class UserController {
 	private RoleRepository roleRepository;
 	
 	@GetMapping(value="/user")
-	public Optional<User> getGreeting(){
+	public Optional<Customer> getGreeting(){
 		return userService.getUserById(1l);
 	}
 	
@@ -90,7 +91,7 @@ public class UserController {
 
 	@GetMapping(value="/users/new")
 	public ModelAndView mewUser(){
-		User user = new User();
+		User user = new Customer();
 		ModelAndView mav = new ModelAndView("userForm");
 		mav.addObject("user",user);
 		
@@ -119,8 +120,8 @@ public class UserController {
 	}
 	
 	@GetMapping(value="/user/{userId}")
-	public Optional<User> getUserById(@PathVariable("userId") Long userId){
-		return userService.getUserById(userId);
+	public Customer getUserById(@PathVariable("userId") Long userId){
+		return userService.getUserById(userId).get();
 	}
 	
 	@DeleteMapping(value="/user/{userId}")

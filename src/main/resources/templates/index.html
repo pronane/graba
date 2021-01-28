@@ -42,7 +42,55 @@
 		<br/>
 	</div>
 	
+	<div th:replace="fragments/common :: standardModal">Standard Modal Dialog </div>
+	
 	<div th:replace="fragments/common :: footer">Static Footer</div>
 </div>
+
+<script  >
+$(document).ready(function() {
+    $("#cart-link").click(function() {
+	alert("here")
+        $.ajax({
+				type: "GET",
+				url: '/loggedInCheck',
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader(crsfHeaderName, csrfValue);
+				},
+            	success: function(result) {
+					if(result.includes("User not logged In")) {
+						alert("here back")
+						$("#modalTitle").text("Shopping Cart");
+						$("#modalBody").text("You must login to view your cart.");
+						$("#myModal").modal();
+						 $('#myModal').on('hidden.bs.modal', function () {
+  							window.location.href = "/login"
+						  })
+					} else {
+						window.location.href = "/shoppingCart"
+					}
+            	},
+				fail: function(result) {
+					alert('There was an error viewing your cart');
+				},
+				error: function(result) {
+					$("#modalTitle").text("Shopping Cart");
+					$("#modalBody").text("There was an error viewing your cart.");
+					$("#myModal").modal();
+				}
+        });
+    });
+
+
+  $('#location-dropdown a').on('click', function () {
+      var location= ($(this).text());
+      alert("Your Favourite Sports is "+location);
+	  var currentSearch  = $("#item-search").attr('placeholder');  
+	  $("#item-search").attr('placeholder', currentSearch + 'in ' + location + '?' );  
+    });
+});
+
+</script>
+
 </body>
 </html>

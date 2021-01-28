@@ -1,11 +1,6 @@
 
 package com.graba.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +11,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.web.util.UrlPathHelper;
 
 import com.graba.repository.CustomerRepository;
 import com.graba.service.GrabaUserDetailsService;
@@ -48,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/**","/oauth2/**", "/register").permitAll()
+		http.authorizeRequests().antMatchers("/**","/oauth2/**", "/register", "/confirm").permitAll()
 				.antMatchers("/customer/**/", "/askquestion/**", "/adddress/**", "/change_password", "/cart","/h2-console/**")
 				.permitAll().anyRequest().permitAll().and()
 				
@@ -95,4 +87,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		grabaUserDetailsService.setUserRepository(userRepository);
 		return new GrabaUserDetailsService();
 	}
+	
 }

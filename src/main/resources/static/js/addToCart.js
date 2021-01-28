@@ -18,9 +18,18 @@ function addToCart() {
 			xhr.setRequestHeader(crsfHeaderName, csrfValue);
 		}
 	}).done(function(reponse) {
-		$("#modalTitle").text("Shopping Cart");
-		$("#modalBody").text(response);
-		$("#myModal").modal();
+		if(reponse.includes("You must login")) {
+			$("#modalTitle").text("Shopping Cart");
+			$("#modalBody").text("You must login to add items to your Cart.");
+			$("#myModal").modal();
+			 $('#myModal').on('hidden.bs.modal', function () {
+				window.location.href = "/login"
+			  })
+		} else {
+			$("#modalTitle").text("Shopping Cart");
+			$("#modalBody").text(response);
+			$("#myModal").modal();
+		}
 	}).fail(function() {
 		$("#modalTitle").text("Shopping Cart");
 		$("#modalBody").text("Error while adding product to shopping cart.");

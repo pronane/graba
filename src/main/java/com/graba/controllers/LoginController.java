@@ -21,8 +21,4 @@ public class LoginController {
 		}
 		return "redirect:/";
 	}
-	/*
-	 * @GetMapping("/") public String home(Model model){ return "index.html"; }
-	 */
-	
 }

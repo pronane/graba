@@ -1,15 +1,21 @@
 package com.graba.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import javax.transaction.Transactional;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.graba.entity.Customer;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long>{
+@Transactional
+public interface CustomerRepository extends UserRepository<Customer>{
 
 	Customer findByEmail(String email);
 
+	@Modifying
+	@Query("update Customer set active='y' where Id=?1")
 	void setActive(Long id);
 
 	Customer findByVerificationCode(String verificationCode);
