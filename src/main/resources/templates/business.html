@@ -14,11 +14,11 @@
 
 		<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
 	
-	<div class="row" >
-		<div class="col" th:each="cat : ${category.children}">
-			<a th:href="@{'/c/' + ${cat.alias}}">
-				<img th:src="@{${cat.imagePath}}" height="100"/><br/>
-				<b>[[${cat.name}]]</b>
+	<div class="row">
+		<div class="col" th:each="business : ${business.itemSubCategories}">
+			<a th:href="@{'/c/' + ${business.name}}">
+				<img th:src="@{${business.imagePath}}" height="100"/><br/>
+				<b>[[${business.name}]]</b>
 			</a>
 		</div>
 	</div>

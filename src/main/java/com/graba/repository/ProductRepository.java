@@ -36,4 +36,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	//@Query(value="SELECT p FROM FT_SEARCH(?1, 0, 0)")
 	@Query(value="SELECT p FROM Product p where p.name = ?1 OR p.shortDescription = ?1 OR p.shortName= ?1")
 	public List<Product> search(String keyword);
+
+	@Query(value="Select p.* from Product p where p.business_id=?1",
+			 countQuery = "SELECT count(*) FROM Product where business_id =?1",
+			 nativeQuery=true)
+	public Page<Product> listByBusiness(Long businessId, Pageable pageable);
 }

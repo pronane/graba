@@ -21,26 +21,13 @@
 	</div>
 	
 	<div class="row">
-		<div class="col" th:each="cat : ${categories}">
-			<div><img th:src="@{${cat.imagePath}}" width="80" /> </div>
+		<div class="col" th:each="order : ${orders}">
 			<div>
-				<a th:href="@{'/c/' + ${cat.alias}}">[[${cat.name}]]</a>
+				<a th:href="@{'/c/' + ${order.name}}">[[${cat.name}]]</a>
 			</div>
 		</div>
 	</div>
 	
-	<div>
-		<h2>Features Sales</h2>
-		<br/>
-	</div>
-	<div>
-		<h2>Features Products</h2>
-		<br/>
-	</div>
-	<div>
-		<h2>Features Brands</h2>
-		<br/>
-	</div>
 	
 	<div th:replace="fragments/common :: footer">Static Footer</div>
 </div>

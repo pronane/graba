@@ -16,10 +16,23 @@
 	<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
 	
 	<div>
-		<h2> Shop by Categories:</h2>
+		<h2> Shop by Business:</h2>
 		<br/>
 	</div>
 	
+	<div class="row">
+		<div class="col" th:each="business : ${buisnesses}">
+			<div><img th:src="@{${business.imagePath}}" width="80" /> </div>
+			<div>
+				<a th:href="@{'/b/' + ${business.name}}">[[${business.name}]]</a>
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		<h2>Shop by Categories:</h2>
+		<br/>
+	</div>
 	<div class="row">
 		<div class="col" th:each="cat : ${categories}">
 			<div><img th:src="@{${cat.imagePath}}" width="80" /> </div>
@@ -30,17 +43,14 @@
 	</div>
 	
 	<div>
-		<h2>Features Sales</h2>
+		<h2>Featured Sales</h2>
 		<br/>
 	</div>
 	<div>
-		<h2>Features Products</h2>
+		<h2>Featured Products</h2>
 		<br/>
 	</div>
-	<div>
-		<h2>Features Brands</h2>
-		<br/>
-	</div>
+
 	
 	<div th:replace="fragments/common :: standardModal">Standard Modal Dialog </div>
 	

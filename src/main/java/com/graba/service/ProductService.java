@@ -97,4 +97,13 @@ public class ProductService {
 		// TODO Auto-generated method stub
 		productRepository.save(product);
 	}
+
+	public Page<Product> listByBusiness(int pageNum, Long businessId) {
+		String categoryMatchId = "-" + String.valueOf(businessId + "-");
+		
+		Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTS_PER_PAGE);
+		
+		//return repo.listByCategory(categoryId, categoryIdMatch, pageable);
+		return productRepository.listByBusiness(businessId, pageable);
+	}
 }

@@ -32,7 +32,7 @@ public class Product {
 	
 	private String fullDescription;
 	
-	private String mainImage;
+	private String mainImagePath;
 	
 	private Date createdDate;
 	
@@ -66,6 +66,16 @@ public class Product {
 	
 	private String details;
 	
+	private Long businessId;
+	
+	public Long getBusinessId() {
+		return businessId;
+	}
+
+	public void setBusinessId(Long businessId) {
+		this.businessId = businessId;
+	}
+
 	private Boolean enabled;
 	
 	public Boolean getEnabled() {
@@ -110,12 +120,12 @@ public class Product {
 		this.fullDescription = fullDescription;
 	}
 
-	public String getMainImage() {
-		return mainImage;
+	public String getMainImagePath() {
+		return mainImagePath;
 	}
 
-	public void setMainImage(String mainImage) {
-		this.mainImage = mainImage;
+	public void setMainImagePath(String mainImagePath) {
+		this.mainImagePath = mainImagePath;
 	}
 
 	public Date getUpdatedDate() {
@@ -257,13 +267,12 @@ public class Product {
 		return this.price;
 	}
 	
-	@Transient
-	public String getMainImagePath() {
-		if(mainImage == null || id == null) 
-			return null;
-		
-		return "/product-images/" + id + "/" + mainImage;
-	}
+	/*
+	 * @Transient public String getMainImagePath() { if(mainImage == null || id ==
+	 * null) return null;
+	 * 
+	 * return "/product-images/" + id + "/" + mainImage; }
+	 */
 	
 	public void addExtraImage(String imageName) {
 		this.images.add(new ProductImage(imageName, this));

@@ -1,8 +1,11 @@
 package com.graba.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.graba.enums.BusinessType;
 
@@ -15,12 +18,33 @@ public class Business {
 	
 	private Long locationId;
 	
-	private Long businessCategoryId;
+	private Long categoryId;
 	
 	private String name;
 	
 	private BusinessType type;
 	
+	private String imagePath;
+	
+	
+	/**
+	 * @TODO update to be a manager/owner
+	 */
+	@Transient
+	private List<ItemSubCategory> itemSubCategories;
+	
+	public List<ItemSubCategory> getItemSubCategories() {
+		return itemSubCategories;
+	}
+
+	public void setItemSubCategories(List<ItemSubCategory> itemSubCategories) {
+		this.itemSubCategories = itemSubCategories;
+	}
+
+	/**
+	 * @TODO update to be a manager/owner
+	 */
+	@Transient
 	private Long ownerId;
 	
 	private String ownerName;
@@ -41,12 +65,12 @@ public class Business {
 		this.locationId = locationId;
 	}
 
-	public Long getBusinessCategoryId() {
-		return businessCategoryId;
+	public Long getCategoryId() {
+		return categoryId;
 	}
 
-	public void setBusinessCategoryId(Long businessCategoryId) {
-		this.businessCategoryId = businessCategoryId;
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getName() {
@@ -80,6 +104,12 @@ public class Business {
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
 	}
-	
-	
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}	
 }

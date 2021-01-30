@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.graba.common.exception.ProductNotFoundException;
+import com.graba.entity.Business;
 import com.graba.entity.Category;
 import com.graba.entity.Product;
+import com.graba.service.BusinessService;
 import com.graba.service.CategoryService;
 import com.graba.service.ProductService;
 
@@ -28,6 +30,8 @@ public class CommonController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private BusinessService buinessService;
 	
 	/*
 	 * @GetMapping("/") public String home(Model model){ return "index.html"; }
@@ -42,7 +46,13 @@ public class CommonController {
 	@GetMapping("/")
 	public String viewHomePage(Model model) {
 		List<Category> categoryList = categoryService.listNoChildrenCategories();
+		/**
+		 * @TODO hardcoded because we only have one location
+		 */
+		List<Business> buisnesses = buinessService.findAllLocalBuisness(1l);
+		
 		model.addAttribute("categories", categoryList);
+		model.addAttribute("buisnesses", buisnesses);
 		model.addAttribute("pageTitle", "Home");
 		
 		return "index.html";
