@@ -15,7 +15,7 @@ public interface CustomerRepository extends UserRepository<Customer>{
 	Customer findByEmail(String email);
 
 	@Modifying
-	@Query("update Customer set active='y' where Id=?1")
+	@Query(value = "update Customer set active='y' where Id=?1", nativeQuery=true)
 	void setActive(Long id);
 
 	Customer findByVerificationCode(String verificationCode);

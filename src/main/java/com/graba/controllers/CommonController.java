@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.graba.common.exception.ProductNotFoundException;
 import com.graba.entity.Category;
 import com.graba.entity.Product;
-import com.graba.service.ProductCategoryService;
+import com.graba.service.CategoryService;
 import com.graba.service.ProductService;
 
 @Controller
 public class CommonController {
 	
 	@Autowired
-	private ProductCategoryService categoryService;
+	private CategoryService categoryService;
 	
 	@Autowired
 	private ProductService productService;
@@ -61,13 +61,13 @@ public class CommonController {
 	}
 	
 	@GetMapping("/c/{category_alias}")
-	public String viewCategory(@PathVariable (name="categoryAlias") String alias, Model model)
+	public String viewCategory(@PathVariable (name="category_alias") String alias, Model model)
 	{
 		return viewCategoryByPage(alias, 1, model);
 	}
 	
 	@GetMapping("/c/{category_alias}/page/{pageNum}")
-	public String viewCategoryByPage (@PathVariable (name="categoryAlias") String alias, @PathVariable(name="pageNum") Integer pageNum,
+	public String viewCategoryByPage (@PathVariable (name="category_alias") String alias, @PathVariable(name="pageNum") Integer pageNum,
 										Model model){
 		Category category = categoryService.getCategory(alias);
 		List<Category> parents = categoryService.getCategoryParents(category);
@@ -94,7 +94,7 @@ public class CommonController {
 		model.addAttribute("products", productList);
 		model.addAttribute("pageTitle", category.getName());
 		
-		return "category";
+		return "category.html";
 	}
 	
 	@GetMapping("/p/{productAlias}")

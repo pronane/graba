@@ -20,22 +20,22 @@ public class ProductCategoryService {
 		return productCategoryRepository.findAll();
 	}
 
-	public List<Category> listNoChildrenCategories() {
+	public List<ProductCategory> listNoChildrenCategories() {
+		// TODO Auto-generated method stub
+		return productCategoryRepository.findAll();
+	}
+
+	public List<ProductCategory> getCategoryParents(Long categoryId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public List<Category> getCategoryParents(Long categoryId) {
+	public ProductCategory getCategory(String alias) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Category getCategory(String alias) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Category> getCategoryParents(Category category) {
+	public List<ProductCategory> getCategoryParents(Category category) {
 		// TODO Auto-generated method stub
 		return null;
 	};

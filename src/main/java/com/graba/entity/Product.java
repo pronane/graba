@@ -66,6 +66,16 @@ public class Product {
 	
 	private String details;
 	
+	private Boolean enabled;
+	
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
 	public String getDetails() {
 		return details;
 	}

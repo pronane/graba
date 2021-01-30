@@ -72,7 +72,7 @@ public class ProductService {
 		Pageable pageable = PageRequest.of(pageNum - 1, PRODUCTS_PER_PAGE);
 		
 		//return repo.listByCategory(categoryId, categoryIdMatch, pageable);
-		return null;
+		return productRepository.listByCategory(categoryId, pageable);
 	}
 	
 	public Product getProduct(String alias) throws ProductNotFoundException {

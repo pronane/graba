@@ -43,7 +43,12 @@ create table if not exists product (id INTEGER not null AUTO_INCREMENT, active b
 average_rating float, brand_id integer, category_id integer, created_date timestamp, DISCOUNT_PERCENT float, 
 full_description varchar(255), height float, in_stock boolean, length float, main_image varchar(255), name varchar(255),
  price float, review_count integer, short_description varchar(255), type integer, updated_date timestamp, weight float,
- width float, cart_item_id bigint , URI varchar(255), details varchar(255), short_name varchar(255), primary key (id));
+ width float, cart_item_id bigint , URI varchar(255), details varchar(255), short_name varchar(255), enabled varchar(1), primary key (id));
+ 
+ create table category (id bigint not null AUTO_INCREMENT, name varchar(50),
+ 						 description varchar(255), alias varchar(15),
+ 						 image_path varchar(255), primary key (id));
+ 
 
 --CREATE ALIAS IF NOT EXISTS FT_INIT FOR "org.h2.fulltext.FullText.init";
 --CALL FT_INIT();
@@ -53,7 +58,6 @@ create table BRAND (id bigint not null, primary key (id));
 create table cart_item (id bigint not null, quantity integer, product_id bigint, customer_id bigint, primary key (id));
 create table customer_order (id bigint not null, quantity integer, product_id bigint, customer_id bigint, subtotal float, primary key (id));
 create table order_item (id bigint not null, quantity integer, product_id bigint, customer_id bigint, subtotal float, primary key (id));
-create table category (id bigint not null, primary key (id));
 create table country (id bigint not null, by_name_asc varchar(255), primary key (id));
 create table customer (cart_item_id bigint, customer_id bigint not null, primary key (customer_id));
  create table product_category (id bigint not null, primary key (id));
@@ -79,16 +83,6 @@ alter table cart_item add constraint sfadafsdafsdafds foreign key (product_id) r
   --   '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a',
   --   1);
 
-INSERT INTO users (username, password, enabled)
- values ('user',
-   '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a',
-   1);
 
-INSERT INTO authorities (username, authority)
-  values ('user', 'ROLE_USER');
-  
-  
-  INSERT INTO product (name,short_description, price, short_name, alias)
-  values ('chicken biryani', 'nice mild dish', '9.99', 'biryani', 'bir');
 
   create sequence hibernate_sequence start with 3 increment by 1
