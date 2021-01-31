@@ -16,7 +16,20 @@
 	<div th:replace="fragments/common :: breadcrumb">Breadcrumb navigation</div>
 	
 	<div>
-		<h2> Shop by Business:</h2>
+		<h2>Order by Category:</h2>
+		<br/>
+	</div>
+	<div class="row">
+		<div class="col" th:each="cat : ${categories}">
+			<div><img th:src="@{${cat.imagePath}}" width="80" /> </div>
+			<div>
+				<a th:href="@{'/c/' + ${cat.alias}}">[[${cat.alias}]]</a>
+			</div>
+		</div>
+	</div>
+	
+	<div>
+		<h2> Order by Business:</h2>
 		<br/>
 	</div>
 	
@@ -28,19 +41,7 @@
 			</div>
 		</div>
 	</div>
-	
-	<div>
-		<h2>Shop by Categories:</h2>
-		<br/>
-	</div>
-	<div class="row">
-		<div class="col" th:each="cat : ${categories}">
-			<div><img th:src="@{${cat.imagePath}}" width="80" /> </div>
-			<div>
-				<a th:href="@{'/c/' + ${cat.alias}}">[[${cat.alias}]]</a>
-			</div>
-		</div>
-	</div>
+
 	
 	<div>
 		<h2>Featured Sales</h2>
