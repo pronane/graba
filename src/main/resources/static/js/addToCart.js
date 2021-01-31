@@ -17,8 +17,8 @@ function addToCart() {
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader(crsfHeaderName, csrfValue);
 		}
-	}).done(function(reponse) {
-		if(reponse.includes("You must login")) {
+	}).done(function(response) {
+		if(response.includes("You must login")) {
 			$("#modalTitle").text("Shopping Cart");
 			$("#modalBody").text("You must login to add items to your Cart.");
 			$("#myModal").modal();
