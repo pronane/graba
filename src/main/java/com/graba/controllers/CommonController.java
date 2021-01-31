@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.graba.common.exception.ProductNotFoundException;
 import com.graba.entity.Business;
 import com.graba.entity.Category;
+import com.graba.entity.Customer;
 import com.graba.entity.Product;
 import com.graba.service.BusinessService;
 import com.graba.service.CategoryService;
+import com.graba.service.CustomerService;
 import com.graba.service.ProductService;
+import com.graba.service.ShoppingCartService;
 
 @Controller
 public class CommonController {
@@ -33,12 +36,24 @@ public class CommonController {
 	@Autowired
 	private BusinessService buinessService;
 	
+	@Autowired
+	private ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	private CustomerService customerService;
 	/*
 	 * @GetMapping("/") public String home(Model model){ return "index.html"; }
 	 */
 	 
 	@GetMapping("/about")
 	public String aboutUs(Model model) {		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+		} else {
+			Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
+			Integer cartItemsSize = shoppingCartService.countByCustomerId(customer.getId());
+			model.addAttribute("cartItemsSize", cartItemsSize);
+		}	
 		return "aboutUs";
 	}
 	
@@ -55,6 +70,14 @@ public class CommonController {
 		model.addAttribute("buisnesses", buisnesses);
 		model.addAttribute("pageTitle", "Home");
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+		} else {
+			Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
+			Integer cartItemsSize = shoppingCartService.countByCustomerId(customer.getId());
+			model.addAttribute("cartItemsSize", cartItemsSize);
+		}	
+		
 		return "index.html";
 	}
 	
@@ -65,7 +88,11 @@ public class CommonController {
 			model.addAttribute("pageTitle", "Customer Login");
 			return "login";
 		}
+		Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
+		Integer cartItemsSize = shoppingCartService.countByCustomerId(customer.getId());
+		
 		model.addAttribute("pageTitle", "Contact");
+		model.addAttribute("cartItemsSize", cartItemsSize);
 		
 		return "contact.html";
 	}
@@ -107,20 +134,6 @@ public class CommonController {
 		return "category.html";
 	}
 	
-	@GetMapping("/p/{productAlias}")
-	public String viewProductDetail(@PathVariable  String productAlias, Model model) {
-		try {
-			Product product = productService.getProduct(productAlias);
-			List<Category> parents = categoryService.getCategoryParents(product.getCategoryId());
-			model.addAttribute("parents", parents);
-			model.addAttribute("product", product);
-			model.addAttribute("pageTitle",  product.getName());
-			
-			return "productDetail";
-		} catch(ProductNotFoundException e) {
-			return "error/404";
-		}
-	}
 	
 	@GetMapping("/search")
 	public String search(@RequestParam (name = "keyword") String keyword, Model model) {
@@ -130,6 +143,14 @@ public class CommonController {
 		model.addAttribute("searchResult", searchResult);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("pageTitle", "Search results for " + keyword);
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+		} else {
+			Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
+			Integer cartItemsSize = shoppingCartService.countByCustomerId(customer.getId());
+			model.addAttribute("cartItemsSize", cartItemsSize);
+		}		
 		
 		return "searchResult";
 	}

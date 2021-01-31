@@ -59,8 +59,9 @@ public class ShoppingCartController {
 						})
 				 		.collect(Collectors.toList());
 		
-		
+		int quanityTotal = filteredList.stream().mapToInt(e -> e.getQuantity()).sum();
 		model.addAttribute("cartItems", filteredList);
+		model.addAttribute("cartItemsSize", quanityTotal);
 		model.addAttribute("products", products);
 		model.addAttribute("pageTitel", "Shopping Cart");
 		

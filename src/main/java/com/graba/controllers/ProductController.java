@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +16,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.graba.common.exception.ProductNotFoundException;
 import com.graba.entity.Brand;
+import com.graba.entity.Category;
+import com.graba.entity.Customer;
 import com.graba.entity.Product;
 import com.graba.entity.ProductCategory;
 import com.graba.service.BrandService;
+import com.graba.service.CategoryService;
+import com.graba.service.CustomerService;
 import com.graba.service.ProductCategoryService;
 import com.graba.service.ProductService;
+import com.graba.service.ShoppingCartService;
 
 @Controller
 public class ProductController {
@@ -30,6 +38,15 @@ public class ProductController {
 	
 	@Autowired
 	private ProductCategoryService productCategoryService;
+	
+	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
+	private CategoryService categoryService;
+	
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 
 	@GetMapping("/products")
 	public String listAll(Model model) {
@@ -44,6 +61,13 @@ public class ProductController {
 			model.addAttribute("pageTitle", "Product Details (ID: " + id + ")");
 			
 		//	return "productDetailModal";
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			} else {
+				Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
+				Integer cartItemsSize = shoppingCartService.countByCustomerId(customer.getId());
+				model.addAttribute("cartItemsSize", cartItemsSize);
+			}	
 			return "productDetail";
 		} catch ( ProductNotFoundException ex) {
 			redirectAttributes.addFlashAttribute("message" , "Could not find any productes with ID " + id);
@@ -102,8 +126,38 @@ public class ProductController {
 			}
 		}
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+		} else {
+			Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
+			Integer cartItemsSize = shoppingCartService.countByCustomerId(customer.getId());
+			model.addAttribute("cartItemsSize", cartItemsSize);
+		}	
+		
 		return "products";
 	}
 	
+	@GetMapping("/p/{productAlias}")
+	public String viewProductDetail(@PathVariable  String productAlias, Model model) {
+		try {
+			Product product = productService.getProduct(productAlias);
+			List<Category> parents = categoryService.getCategoryParents(product.getCategoryId());
+			model.addAttribute("parents", parents);
+			model.addAttribute("product", product);
+			model.addAttribute("pageTitle",  product.getName());
+			
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if(authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+			} else {
+				Customer customer = customerService.getCurrentlyLoggedInCustomer(authentication);
+				Integer cartItemsSize = shoppingCartService.countByCustomerId(customer.getId());
+				model.addAttribute("cartItemsSize", cartItemsSize);
+			}	
+			
+			return "productDetail";
+		} catch(ProductNotFoundException e) {
+			return "error/404";
+		}
+	}
 
 }

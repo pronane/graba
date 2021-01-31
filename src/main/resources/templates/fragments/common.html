@@ -57,7 +57,11 @@
 						</li>
 						</th:block>
 						<li class="nav-item">
-							<a class="nav-link" id="cart-link" th:href="@{/cart}">Cart</a>
+							<!--<i class="fa" style="font-size:24px">&#xf07a;</i>-->
+							<div class="cart update">
+								<span class='badge badge-warning' name="lblCartCount" id='lblCartCount'>[[${cartItemsSize}]]</span>
+								<a class="nav-link" id="cart-link" th:href="@{/cart}"></a>
+							</div>
 						</li>
 						
 						<th:block sec:authorize="isAuthenticated()">
@@ -65,9 +69,6 @@
 							<a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>
 						</li> 
 						</th:block>
-					</ul>
-								<i class="fa" style="font-size:24px">&#xf07a;</i>
-							<span class='badge badge-warning' id='lblCartCount'> 5 </span>
 					</ul>
 				</div>
 			</nav>

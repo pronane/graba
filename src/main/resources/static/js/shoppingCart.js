@@ -40,6 +40,8 @@ function removeFromCart(link) {
 				rowNumber = link.attr("rowNumber");
 				removeProduct(rowNumber);
 				updateTotal();
+				originalQuantity = $("#quantity" + productId);
+
 			});
 		}
 		$("#modalBody").text(response);
@@ -65,6 +67,7 @@ function decreaseQuantity(link) {
 	if (newQty > 0) {
 		qtyInput.val(newQty);
 		updateQuantity(productId,newQty);
+		removeFromBasket(newQty);
 	}
 }
 
@@ -75,8 +78,8 @@ function increaseQuantity(link) {
 	if (newQty < 10) {
 		qtyInput.val(newQty);
 		updateQuantity(productId, newQty);
-	}
-		
+	    addToBasket(newQty);
+	}	
 }
 
 function updateQuantity(productId, quantity) {
@@ -97,6 +100,24 @@ function updateQuantity(productId, quantity) {
 		$("#modalBody").text("Error while adding product to shopping cart.");
 		$("#myModal").modal();
 	});
+}
+
+function addToBasket(newQuantity) {
+		var original = $('.update span').html();
+		if(!original ) {
+			original = '0';
+		}
+		var totalCartItems = parseInt(original) + parseInt(1);
+		$('.update span').html(totalCartItems);
+}
+
+function removeFromBasket(newQuantity) {
+		var original = $('.update span').html();
+		if(!original ) {
+			original = '0';
+		}
+		var totalCartItems = parseInt(original) - parseInt(1);
+		$('.update span').html(totalCartItems);
 }
 
 /*function updateQuantity(productId, quantity) {

@@ -89,6 +89,8 @@
 	var crsfHeaderName = "[[${_csrf.headerName}]]";
 	var csrfValue = "[[${_csrf.token}]]";
 	var productId = "1";
+	var cartItems = "[[${cartItemsSize}]]";
+	$('.update span').html(cartItems);
 </script>	
 	
 <script th:src="@{/js/shoppingCart.js}"> </script>

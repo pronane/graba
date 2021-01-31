@@ -61,6 +61,11 @@ public class ShoppingCartService {
 	}
 	
 	public void removeProduct(Long productId, Customer customer) {
-		cartRepository.deleteByCustomerIdAndProductId(customer.getId(),customer.getId());
+		cartRepository.deleteByCustomerIdAndProductId(customer.getId(),productId);
+	}
+
+	public Integer countByCustomerId(Long customerId) {
+		// TODO Auto-generated method stub
+		return cartRepository.countByCustomerId(customerId);
 	}
 }

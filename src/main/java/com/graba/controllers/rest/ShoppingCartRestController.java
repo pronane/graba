@@ -112,7 +112,7 @@ public class ShoppingCartRestController {
 			return "You must login to remove product";
 		}
 		
-		 cartService.removeProduct(productId, customer);
+		cartService.removeProduct(productId, customer);
 		
 		return "The product has been removed from your shopping cart.";
 	}
