@@ -122,7 +122,6 @@ function removeFromBasket(newQuantity) {
 
 /*function updateQuantity(productId, quantity) {
 	url= contextPath + "/cart/update/" + productId + "/" + quantity;
-		alert("alert url is " + url);
 	$.ajax({
 		type: "POST",
 		url: url,

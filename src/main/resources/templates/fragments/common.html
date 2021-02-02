@@ -12,6 +12,80 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" th:href="@{/fontawesome/all.css}" />
 <!--	<link rel="stylesheet" th:href="@{style.css}" />-->
+<style>
+
+.image-wrapper {
+  position: relative;
+  width: min-content;
+}
+
+.image-wrapper span {
+  position: absolute;
+  top: 1px;
+  left: 20px;
+}
+
+.image-wrapper2 {
+  position: relative;
+  width: min-content;
+  top: 0px;
+  right: 30px;
+}
+
+.image-wrapper2 span {
+  position: absolute;
+  top: 0px;
+  right: 30px;
+}
+
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+  background-color: #c67605;
+}
+#lblCartCount {
+    font-size: 12px;
+    background: #ff0000;
+    color: #fff;
+    padding: 0 5px;
+    vertical-align: top;
+    margin-left: -10px; 
+}
+
+bell {
+    display: inline-block;
+    position: relative;
+    background-color: #eee;
+    width: 48px;
+    height: 42px;
+    text-align: center;
+    padding-top: 6px;
+}
+.bell img {
+    width: 24px;
+    height: 24px;
+    padding-top: 10px;
+}
+.bellnumbers {
+    font-size:12px;
+    background-color:red;
+    width:16px;
+    line-height: 16px;
+    text-align: center;
+    color:#fff;
+    z-index: 2;
+    border-radius: 3px;
+    position: absolute;
+    left: 28px;
+}
+</style>
 </head>
 <body>
 
@@ -22,7 +96,7 @@
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 				<a class="navbar-brand" th:href="@{/}">
 					<!--<img alt="Site Logo" th:src="@{${siteLogo}" />-->
-					<img alt="Site Logo" height="50" th:src="@{images/logo8.png}" />
+					<img alt="Site Logo" height="50" th:src="@{/images/logo8.png}" />
 				</a>
 				<button class=navbar-toggler type="button" data-toggle="collapse" data-target="#mainNavbar">
 					<span class="navbar-toggler-icon"> </span>
@@ -57,13 +131,21 @@
 						</li>
 						</th:block>
 						<li class="nav-item">
-							<!--<i class="fa" style="font-size:24px">&#xf07a;</i>-->
-							<div class="cart update">
-								<span class='badge badge-warning' name="lblCartCount" id='lblCartCount'>[[${cartItemsSize}]]</span>
-								<a class="nav-link" id="cart-link" th:href="@{/cart}"></a>
+							
+							<div class="cart update">		
+								<a class="nav-link" id="cart-link" th:href="@{/cart}" ><img alt="basket" height="30" src="/images/basket.png" />
+								<span class="badge badge-warning" id="lblCartCount"><i class="fa" style="font-size:12px">[[${cartItemsSize}]]</i></span></a>
 							</div>
-						</li>
+<!--							<i class="fa" style="font-size:24px">&#xf07a;</i><img alt="basket" height="30" src="images/basket.png" />
+<span class='badge badge-warning' id='lblCartCount'> 5 </span>
+						</li>-->
 						
+				<!--			<li class="nav-item">
+								<div class="image-wrapper">
+									<img src="images/basket.png" height="30">
+									<span color="red">5</span>
+								</div>
+							</li>-->
 						<th:block sec:authorize="isAuthenticated()">
 						<li class="nav-item">
 							<a class="nav-link" href="javascript: document.logoutForm.submit()">Logout</a>
@@ -192,26 +274,5 @@
 		</div>
 	</div>
 </body>
-<style>
-.badge {
-  padding-left: 9px;
-  padding-right: 9px;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
-}
 
-.label-warning[href],
-.badge-warning[href] {
-  background-color: #c67605;
-}
-#lblCartCount {
-    font-size: 12px;
-    background: #ff0000;
-    color: #fff;
-    padding: 0 5px;
-    vertical-align: top;
-    margin-left: -10px; 
-}
-</style>
 </html>

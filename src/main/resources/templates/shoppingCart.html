@@ -26,12 +26,10 @@
 					<div class="row border rounded" th:with="product = ${products[status.index]}" th:id="'row' +${status.count}">
 					
 						<div class="col-1">
-							<div> [[${status.count}]] </div>
-							<div>
-								<!--<a class="fas fa-trash icon-dark link-remove"-->
-								
-								<a class="fas fa-trash icon-dark link-remove"
-									th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}">Remove
+							<div class="image-wrapper2">
+								<a class="fas fa-trash icon-dark link-remove" th:rowNumber="${status.count}" th:href="@{'/cart/remove/' + ${product.id}}">
+									<img src="images/bin.png" height="60">
+									<span color="red">[[${status.count}]]</span>
 								</a>
 							</div>
 						</div>

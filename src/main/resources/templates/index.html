@@ -61,7 +61,6 @@
 <script  >
 $(document).ready(function() {
     $("#cart-link").click(function() {
-	alert("here")
         $.ajax({
 				type: "GET",
 				url: '/loggedInCheck',
@@ -70,7 +69,6 @@ $(document).ready(function() {
 				},
             	success: function(result) {
 					if(result.includes("User not logged In")) {
-						alert("here back")
 						$("#modalTitle").text("Shopping Cart");
 						$("#modalBody").text("You must login to view your cart.");
 						$("#myModal").modal();
@@ -95,7 +93,6 @@ $(document).ready(function() {
 
   $('#location-dropdown a').on('click', function () {
       var location= ($(this).text());
-      alert("Your Favourite Sports is "+location);
 	  var currentSearch  = $("#item-search").attr('placeholder');  
 	  $("#item-search").attr('placeholder', currentSearch + 'in ' + location + '?' );  
     });
