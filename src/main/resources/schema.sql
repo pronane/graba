@@ -1,4 +1,5 @@
 CREATE TABLE users (
+    id BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
     enabled TINYINT NOT NULL DEFAULT 1,
@@ -20,15 +21,23 @@ CREATE TABLE users (
     PRIMARY KEY (username)
 );
   
-CREATE TABLE authorities (
-    username VARCHAR(50) NOT NULL,
-    authority VARCHAR(50) NOT NULL,
-    FOREIGN KEY (username)
-        REFERENCES users (username)
+CREATE TABLE roles (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name varchar(45) NOT NULL,
+  PRIMARY KEY (id)
+);
+ 
+CREATE TABLE users_roles (
+  user_id BIGINT NOT NULL AUTO_INCREMENT,
+  role_id BIGINT NOT NULL,
+--  KEY user_fk_idx (user_id),
+--  KEY role_fk_idx (role_id),
+  CONSTRAINT role_fk FOREIGN KEY (role_id) REFERENCES roles (id),
+  CONSTRAINT user_fk FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
-CREATE UNIQUE INDEX ix_auth_username
-  on authorities (username,authority);
+--CREATE UNIQUE INDEX ix_auth_username
+--  on authorities (username,authority);
 
 
 CREATE TABLE IF NOT EXISTS persistent_logins (

@@ -12,6 +12,7 @@ import com.graba.entity.Customer;
 @Transactional
 public interface CustomerRepository extends UserRepository<Customer>{
 
+	@Query(value = "select * from users u where u.email =?1 ", nativeQuery=true)
 	Customer findByEmail(String email);
 
 	@Modifying

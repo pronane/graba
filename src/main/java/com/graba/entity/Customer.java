@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity(name="Customer")
+@Entity
 @Table(name="Users")
 public class Customer extends User{
 

@@ -1,42 +1,38 @@
 package com.graba.entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Role")
+@Table(name = "roles")
 public class Role {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+     
+    private String name;
+    
+    public Integer getId() {
+        return id;
+    }
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	
 	public String getName() {
-		// TODO Auto-generated method stub
-		return "Admin";
-	}
-	
-	
-	 @JoinTable(name = "user", 
-			 joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-			 inverseJoinColumns = @JoinColumn(name = "user_role_id", referencedColumnName = "id"))
-	@OneToMany(targetEntity = UserRole.class)
-	private Set<UserRole> userRoles = new HashSet<UserRole>();
-
-	public Set<UserRole> getUserRoles() {
-		return userRoles;
+		return name;
 	}
 
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+     
+    
+    // remaining getters and setters   
 }

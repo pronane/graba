@@ -1,10 +1,18 @@
  INSERT INTO users (username, password, enabled)
- values ('user',
+  values ('user',
    '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a',
    1);
+   
+ INSERT INTO users (username, password, enabled, email)
+  values ('pronane@yahoo.com',
+   '$2a$10$rXqzy1A80psKc9vOoBeQ9uCULfIvkzBtFvSDtbs.PdsRwvqtQc.g6',
+   1, 'pronane@yahoo.com');
 
-INSERT INTO authorities (username, authority)
-  values ('user', 'ROLE_USER');
+--INSERT INTO authorities (username, authority)
+--  values ('user', 'ROLE_USER');
+  
+ -- INSERT INTO authorities (username, authority)
+ -- values ('pronane@yahoo.com', 'ROLE_USER');
   
   insert into location(name, city)
   values ('Castlerea', 'castlerea');
